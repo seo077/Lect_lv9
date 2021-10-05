@@ -28,4 +28,9 @@ public class GuildManager {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void printAllMember() {
+		// TODO Auto-generated method stub
+		
+	}
 }

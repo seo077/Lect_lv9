@@ -21,15 +21,12 @@ public class Rpg {
 	}
 
 	private void printMainMenu() {
-		String menu = "｛1.길드 관리｝｛2.상점｝｛3.인벤토리｝｛4.저장｝｛5.로드｝｛6.관리자｝｛0.종료｝";
+		String menu = "｛1.길드 관리｝｛2.상점｝｛3.인벤토리｝｛4.저장｝｛5.로드｝\n｛6.관리자｝｛0.종료｝";
 		System.out.println(menu);
 	}
 	
 	private boolean selMainMenu() {
-		System.out.print("메뉴 선택 : ");
-		String temp = this.scan.next();
-		
-		int sel = intCheck(temp);
+		int sel = intSel();
 		
 		if(sel == 1) {
 			gm.ownGuildManage();
@@ -63,13 +60,18 @@ public class Rpg {
 		return false;
 	}
 
-	public static int intCheck(String temp) {
-		int sel = -1;
-		try {
-			sel = Integer.parseInt(temp);
-		} catch (Exception e) {
-			System.out.println("숫자를 입력하세요");
+	public static int intSel() {
+		while(true) {
+			System.out.print("선택 : ");
+			String temp = Rpg.scan.next();
+			
+			int sel = -1;
+			try {
+				sel = Integer.parseInt(temp);
+				return sel;
+			} catch (Exception e) {
+				System.out.println("숫자를 입력하세요");
+			}
 		}
-		return sel;
 	}
 }

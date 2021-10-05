@@ -8,6 +8,8 @@ public class Rpg {
 	
 	private FileManager fm = FileManager.instance;
 	private ItemManager im = ItemManager.instance;
+	private GuildManager gm = GuildManager.instance;
+	private RpgManager rm = RpgManager.instance;
 	
 	public void run() {
 		while(true) {
@@ -19,7 +21,7 @@ public class Rpg {
 	}
 
 	private void printMainMenu() {
-		String menu = "｛1.길드 관리｝｛2.상점｝｛3.인벤토리｝｛4.저장｝｛5.로드｝｛0.종료｝";
+		String menu = "｛1.길드 관리｝｛2.상점｝｛3.인벤토리｝｛4.저장｝｛5.로드｝｛6.관리자｝｛0.종료｝";
 		System.out.println(menu);
 	}
 	
@@ -30,15 +32,19 @@ public class Rpg {
 		int sel = intCheck(temp);
 		
 		if(sel == 1) {
-			
+			gm.ownGuildManage();
 		}else if(sel == 2) {
-			
+			im.shop();
 		}else if(sel == 3) {
 			
 		}else if(sel == 4) {
-			
+			fm.save();
 		}else if(sel == 5) {
-			
+			fm.load();
+		}else if(sel == 6) {
+			if(checkManager()) {
+				rm.manage();
+			}
 		}else if(sel == 0) {
 			return true;
 		}
@@ -46,7 +52,18 @@ public class Rpg {
 		return false;
 	}
 
-	public int intCheck(String temp) {
+	private boolean checkManager() {
+		System.out.print("관리자 비밀번호를 입력하세요(0000): ");
+		String pw = this.scan.next();
+		
+		if(pw.equals("0000")) {
+			return true;
+		}
+		System.out.println("관리자만 입장 가능");
+		return false;
+	}
+
+	public static int intCheck(String temp) {
 		int sel = -1;
 		try {
 			sel = Integer.parseInt(temp);

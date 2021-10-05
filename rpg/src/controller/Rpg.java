@@ -12,6 +12,7 @@ public class Rpg {
 	private RpgManager rm = RpgManager.instance;
 	
 	public void run() {
+		fm.load(); //상점아이템,캐릭터 불러오기
 		while(true) {
 			printMainMenu();
 			if(selMainMenu()) {
@@ -35,13 +36,14 @@ public class Rpg {
 		}else if(sel == 3) {
 			
 		}else if(sel == 4) {
-			fm.save();
+			
 		}else if(sel == 5) {
-			fm.load();
+			
 		}else if(sel == 6) {
 			if(checkManager()) {
 				rm.manage();
 			}
+			fm.save();
 		}else if(sel == 0) {
 			return true;
 		}

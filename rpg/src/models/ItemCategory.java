@@ -3,11 +3,13 @@ package models;
 import java.util.ArrayList;
 
 public class ItemCategory {
+	public static String effects[] = {"level_Up","hp_Up","att_Up","def_Up"};
+	
 	private String kind;
-	private String effect;
+	private int effect;
 	private ArrayList<Item>items = new ArrayList<>();
 	
-	public ItemCategory(String kind,String effect) {
+	public ItemCategory(String kind,int effect) {
 		this.kind = kind;
 		this.effect = effect;
 	}
@@ -19,7 +21,7 @@ public class ItemCategory {
 		return this.kind;
 	}
 	public String getEffect() {
-		return this.effect;
+		return this.effects[this.effect];
 	}
 	
 	public String getItemName(int j) {
@@ -34,5 +36,16 @@ public class ItemCategory {
 
 	public void addItems(String name, int power, int price) {
 		this.items.add(new Item(this.kind,name, power, price));
+	}
+	
+	public int getItemSize() {
+		return this.items.size();
+	}
+	
+	public void removeItem(int selItem) {
+		this.items.remove(selItem);
+	}
+	public String getItemKind(int j) {
+		return this.kind;
 	}
 }

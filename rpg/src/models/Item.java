@@ -14,6 +14,10 @@ public class Item {
 		this.price = price;
 	}
 	
+	
+	public String getKind() {
+		return this.kind;
+	}
 	public String getName() {
 		return this.name;
 	}

@@ -50,4 +50,8 @@ public class Inventory {
 	public int getPrice() {
 		return this.price;
 	}
+
+	public void setAvailable(boolean b) {
+		this.available = b;
+	}
 }

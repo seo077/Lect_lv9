@@ -12,18 +12,22 @@ public class FileManager {
 	private FileReader fr = null;
 	private BufferedReader br = null;
 	
-	private String ItemFileName = "item.txt";
-	private String MemberFileName = "member.txt";
+	private String ItemFileName = "item.txt"; //전제 아이템
+	private String MemberFileName = "member.txt"; //전체 캐릭터
+	private String MyGuildFileName = "guild.txt"; //내 길드원
+	private String MyInventoryFileName = "inventory.txt"; //내 아이템
 	
 	private File itemFile = new File(ItemFileName);
 	private File memberFile = new File(MemberFileName);
+	private File myGuildFile = new File(MyGuildFileName);
+	private File myInventoryFile = new File(MyInventoryFileName);
 	
 	private ItemManager im = ItemManager.instance;
-	private CharacterManager gm = CharacterManager.instance;
+	private CharacterManager cm = CharacterManager.instance;
 	
 	public void save() {
 		String itemString = im.toString();
-		String memberString = gm.toString();
+		String memberString = cm.toString();
 		
 		try {
 			fw = new FileWriter(itemFile);
@@ -40,7 +44,7 @@ public class FileManager {
 
 	public void load() {
 		im.clear();
-		gm.clear();
+		cm.clear();
 		if(itemFile.exists()) {
 			try {
 				fr = new FileReader(itemFile);
@@ -54,9 +58,7 @@ public class FileManager {
 				}
 				fr.close();
 				br.close();
-				System.out.println(">> 아이템 로드 성공");
 			} catch (Exception e) {
-				System.out.println(">> 아이템 로드 실패");
 			}
 		}
 		if(memberFile.exists()) {
@@ -68,17 +70,39 @@ public class FileManager {
 				while(data != null) {
 					String temp[] = data.split("/");
 					int size = temp.length;
-					gm.setData(temp);
+					cm.setData(temp);
 					data = br.readLine();
 				}
 				
 				fr.close();
 				br.close();
-				System.out.println(">> 캐릭터 로드 성공");
 			} catch (Exception e) {
-				System.out.println(">> 캐릭터 로드 실패");
 				// TODO: handle exception
 			}
 		}
+	}
+
+	public void ownSave() {
+		System.out.println("save");
+		String guildString = cm.guildToString();
+		System.out.println(guildString);
+		//String inventoryString = im.inventoryToString();
+		
+		try {
+			fw = new FileWriter(myGuildFile);
+			fw.write(guildString);
+			fw.close();
+			
+//			fw = new FileWriter(myInventoryFile);
+//			fw.write(inventoryString);
+//			fw.close();
+		} catch (Exception e) {
+			System.out.println("저장 실패");
+		}
+	}
+
+	public void ownLoad() {
+		// TODO Auto-generated method stub
+		
 	}
 }

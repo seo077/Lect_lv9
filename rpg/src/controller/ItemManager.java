@@ -8,6 +8,8 @@ import models.ItemCategory;
 
 public class ItemManager {
 	public static ItemManager instance = new ItemManager();
+	
+	private CharacterManager cm = CharacterManager.instance;
 
 	private ArrayList<ItemCategory> items = new ArrayList<>();
 	private ArrayList<Inventory>myItems = new ArrayList<>();
@@ -308,7 +310,7 @@ public class ItemManager {
 			if(sel == 1) {
 				printMyItems();
 			}else if(sel == 2) {
-				//equipItem();
+				equipItem();
 			}else if(sel == 3) {
 				sellItem();
 			}else if(sel == 0) {
@@ -318,6 +320,36 @@ public class ItemManager {
 		}
 	}
 	
+	private void equipItem() {
+		int chasize = cm.getCharacterSize();
+		cm.printMyMembers();
+		System.out.println("멤버 선택 : ");
+		String idx = Rpg.scan.next();
+		int chasel = ItemManager.intCheck(idx) - 1;
+		if (chasel >= 0 && chasel < chasize) {
+			int itemsize = this.myItems.size();
+			printMyItems();
+			System.out.print("착용할 아이템 입력: ");
+			String tmp = Rpg.scan.next();
+
+			int itemsel = intCheck(tmp) - 1;
+			if (itemsel >= 0 && itemsel < itemsize) {
+				if(!this.myItems.get(itemsel).getAvailable()) {
+					System.out.println("이미 착용 중인 아이템입니다.");
+					return;
+				}
+				String name = cm.getName(chasel);
+				System.out.printf("<이름 : %s > %s  +%d\n",name,ItemCategory.effects[this.myItems.get(itemsel).getEffect()],this.myItems.get(itemsel).getPower());
+				cm.addItem(chasel,this.myItems.get(itemsel));
+				this.myItems.get(itemsel).addCnt(-1);
+				if(this.myItems.get(itemsel).getCnt() == 0) {
+					this.myItems.get(itemsel).setAvailable(false);
+				}
+			}
+		}
+	}
+
+
 	private void sellItem() {
 		printMyItems();
 		int size = this.myItems.size();
@@ -326,7 +358,7 @@ public class ItemManager {
 
 		int sel = intCheck(tmp) - 1;
 		if (sel >= 0 && sel < size) {
-			if(this.myItems.get(sel).getAvailable()) {
+			if(!this.myItems.get(sel).getAvailable()) {
 				System.out.println("착용하고 있는 물건은 판매가 불가능합니다.");
 				return;
 			}
@@ -339,4 +371,7 @@ public class ItemManager {
 			System.out.println("판매 완료!");
 		}
 	}
+
+
+	
 }

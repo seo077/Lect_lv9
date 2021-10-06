@@ -6,6 +6,7 @@ public class Rpg {
 	public static Rpg instance = new Rpg();
 	public static Scanner scan = new Scanner(System.in);
 	public static int myMoney = 50000;
+	public static int party = 0;
 	
 	private FileManager fm = FileManager.instance;
 	private ItemManager im = ItemManager.instance;
@@ -38,9 +39,9 @@ public class Rpg {
 		}else if(sel == 3) {
 			im.inventory();
 		}else if(sel == 4) {
-			
+			fm.ownSave();
 		}else if(sel == 5) {
-			
+			fm.ownLoad();
 		}else if(sel == 6) {
 			if(checkManager()) {
 				rm.manage();

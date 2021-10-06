@@ -64,6 +64,14 @@ public class FileManager {
 				fr = new FileReader(memberFile);
 				br = new BufferedReader(fr);
 				
+				String data = br.readLine();
+				while(data != null) {
+					String temp[] = data.split("/");
+					int size = temp.length;
+					gm.setData(temp);
+					data = br.readLine();
+				}
+				
 				fr.close();
 				br.close();
 			} catch (Exception e) {

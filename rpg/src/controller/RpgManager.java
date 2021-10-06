@@ -4,7 +4,7 @@ public class RpgManager {
 	public static RpgManager instance = new RpgManager();
 	
 	private ItemManager im = ItemManager.instance;
-	private GuildManager gm = GuildManager.instance;
+	private CharacterManager cm = CharacterManager.instance;
 
 	public void manage() {
 		while (true) {
@@ -16,7 +16,7 @@ public class RpgManager {
 	}
 
 	private void printManageMenu() {
-		String menu = "¡²1.±æµå¿ø °ü¸®¡³¡²2.¾ÆÀÌÅÛ °ü¸®¡³¡²0.µÚ·Î °¡±â¡³";
+		String menu = "[1.ê¸¸ë“œ ê´€ë¦¬] [2.ì•„ì´í…œ ê´€ë¦¬] [0.ë’¤ë¡œê°€ê¸°]\n";
 		System.out.print(menu);
 	}
 
@@ -35,7 +35,7 @@ public class RpgManager {
 
 	private void manageItem() {
 		while(true) {
-			String menu = "¡²1.Ä«Å×°í¸® °ü¸®¡³¡²2.¾ÆÀÌÅÛ °ü¸®¡³¡²3.ÀüÃ¼ ¾ÆÀÌÅÛ¡³¡²0.µÚ·Î °¡±â¡³";
+			String menu = "[1.ì¹´í…Œê³ ë¦¬ ê´€ë¦¬] [2.ì•„ì´í…œ ê´€ë¦¬] [3.ì „ì²´ ì•„ì´í…œ] [0.ë’¤ë¡œ ê°€ê¸°]";
 			System.out.println(menu);
 			
 			
@@ -56,18 +56,18 @@ public class RpgManager {
 
 	private void manageGuildMember() {
 		while(true) {
-			String menu = "¡²1.±æµå¿ø Ãß°¡¡³¡²2.±æµå¿ø »èÁ¦¡³¡²3.ÀüÃ¼ ±æµå¿ø¡³¡²4.Á¤·Ä(lv±âÁØ)¡³¡²0.µÚ·Î °¡±â¡³";
+			String menu = "[1.ìºë¦­í„° ì¶”ê°€] [2.ìºë¦­í„° ì‚­ì œ] [3.ì „ì²´ ìºë¦­í„°] [4.ë ˆë²¨ìˆœ ì •ë ¬] [0.ë’¤ë¡œ ê°€ê¸°]";
 			System.out.println(menu);
 		
 			int sel = Rpg.intSel();
 			if(sel == 1) {
-				gm.addMember();
+				cm.addCharacter();
 			}else if(sel == 2) {
-				gm.delMember();
+				cm.delCharacter();
 			}else if(sel == 3) {
-				gm.printAllMember();
+				cm.printAllCharacter();
 			}else if(sel == 4) {
-				gm.sort();
+				cm.sort();
 			}else if(sel == 0) {
 				break;
 			}

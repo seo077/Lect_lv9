@@ -2,19 +2,19 @@ package controller;
 
 import java.util.ArrayList;
 
-import models.GuildMember;
+import models.Character;
 
-public class GuildManager {
-	public static GuildManager instance = new GuildManager();
+public class CharacterManager {
+	public static CharacterManager instance = new CharacterManager();
 
-	private ArrayList<GuildMember> members = new ArrayList<>();
+	private ArrayList<Character> members = new ArrayList<>();
 
 	public void ownGuildManage() {
 		// TODO Auto-generated method stub
 
 	}
 
-	public void addMember() {
+	public void addCharacter() {
 		System.out.print("name : ");
 		String name = Rpg.scan.next();
 		while (true) {
@@ -48,16 +48,16 @@ public class GuildManager {
 			if (def == -1) {
 				continue;
 			}
-			this.members.add(new GuildMember(name, level, hp, maxhp, att, def, false));
+			this.members.add(new Character(name, level, hp, maxhp, att, def));
 
 			break;
 		}
 	}
 
-	public void delMember() {
-		int size = this.getMemberSize();
-		printAllMember();
-		System.out.print("ªË¡¶«“ ∏‚πˆ º±≈√ : ");
+	public void delCharacter() {
+		int size = this.getCharacterSize();
+		printAllCharacter();
+		System.out.print("ÏÇ≠Ï†úÌï† Î©§Î≤Ñ ÏÑ†ÌÉù : ");
 		String temp = Rpg.scan.next();
 		
 		int idx = ItemManager.intCheck(temp)-1;
@@ -67,7 +67,7 @@ public class GuildManager {
 	}
 
 	public void sort() {
-		int size = this.getMemberSize();
+		int size = this.getCharacterSize();
 		for(int i=0;i<size;i++) {
 			int min = this.members.get(i).getLevel();
 			int minIdx = i;
@@ -78,29 +78,28 @@ public class GuildManager {
 				}
 			}
 			
-			GuildMember temp = this.members.get(i);
+			Character temp = this.members.get(i);
 			this.members.set(i,this.members.get(minIdx));
 			this.members.set(minIdx, temp);
 		}
 	}
 
-	public void printAllMember() {
-		int size = this.getMemberSize();
+	public void printAllCharacter() {
+		int size = this.getCharacterSize();
 		for (int i = 0; i < size; i++) {
-			GuildMember tmp = this.members.get(i);
-			System.out.printf("(%d) <name : %s> <level : %d> <hp : %d/%d> <att : %d> <def : %d> <party : %b>\n", i + 1,
-					tmp.getName(), tmp.getLevel(), tmp.getHp(), tmp.getMaxhp(), tmp.getAtt(), tmp.getDef(),
-					tmp.getParty());
+			Character tmp = this.members.get(i);
+			System.out.printf("(%d) <name : %s> <level : %d> <hp : %d/%d> <att : %d> <def : %d> \n", i + 1,
+					tmp.getName(), tmp.getLevel(), tmp.getHp(), tmp.getMaxhp(), tmp.getAtt(), tmp.getDef());
 		}
 	}
 
-	public int getMemberSize() {
+	public int getCharacterSize() {
 		return this.members.size();
 	}
 
 	@Override
 	public String toString() {
-		int size = this.getMemberSize();
+		int size = this.getCharacterSize();
 		String data = "";
 		for(int i=0;i<size;i++) {
 			data += this.members.get(i).getName()+"/";
@@ -108,8 +107,8 @@ public class GuildManager {
 			data += this.members.get(i).getHp()+"/";
 			data += this.members.get(i).getMaxhp()+"/";
 			data += this.members.get(i).getAtt()+"/";
-			data += this.members.get(i).getDef()+"/";
-			data += this.members.get(i).getParty();
+			data += this.members.get(i).getDef();
+
 			if(i != size-1) {
 				data += "\n";
 			}
@@ -122,6 +121,6 @@ public class GuildManager {
 	}
 
 	public void setData(String[] temp) {
-		this.members.add(new GuildMember(temp[0], Integer.parseInt(temp[1]),  Integer.parseInt(temp[2]),  Integer.parseInt(temp[3]),  Integer.parseInt(temp[4]),  Integer.parseInt(temp[5]),Boolean.parseBoolean(temp[6])));
+		this.members.add(new Character(temp[0], Integer.parseInt(temp[1]),  Integer.parseInt(temp[2]),  Integer.parseInt(temp[3]),  Integer.parseInt(temp[4]),  Integer.parseInt(temp[5])));
 	}
 }

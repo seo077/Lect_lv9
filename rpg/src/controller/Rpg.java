@@ -8,11 +8,11 @@ public class Rpg {
 	
 	private FileManager fm = FileManager.instance;
 	private ItemManager im = ItemManager.instance;
-	private GuildManager gm = GuildManager.instance;
+	private CharacterManager gm = CharacterManager.instance;
 	private RpgManager rm = RpgManager.instance;
 	
 	public void run() {
-		fm.load(); //»óÁ¡¾ÆÀÌÅÛ,Ä³¸¯ÅÍ ºÒ·¯¿À±â
+		fm.load(); //ìƒì ì•„ì´í…œ ìºë¦­í„° ë¶ˆëŸ¬ì˜¤ê¸°
 		while(true) {
 			printMainMenu();
 			if(selMainMenu()) {
@@ -22,7 +22,7 @@ public class Rpg {
 	}
 
 	private void printMainMenu() {
-		String menu = "£û1.±æµå °ü¸®£ı£û2.»óÁ¡£ı£û3.ÀÎº¥Åä¸®£ı£û4.ÀúÀå£ı£û5.·Îµå£ı\n£û6.°ü¸®ÀÚ£ı£û0.Á¾·á£ı";
+		String menu = "[1.ê¸¸ë“œ ê´€ë¦¬] [2.ìƒì ] [3.ì¸ë²¤í† ë¦¬] [4.ì €ì¥] [5.ë¡œë“œ]\n[6.ê´€ë¦¬ì] [0.ì¢…ë£Œ]";
 		System.out.println(menu);
 	}
 	
@@ -52,19 +52,19 @@ public class Rpg {
 	}
 
 	private boolean checkManager() {
-		System.out.print("°ü¸®ÀÚ ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä(0000): ");
+		System.out.print("ê´€ë¦¬ì ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”(0000): ");
 		String pw = this.scan.next();
 		
 		if(pw.equals("0000")) {
 			return true;
 		}
-		System.out.println("°ü¸®ÀÚ¸¸ ÀÔÀå °¡´É");
+		System.out.println("ê´€ë¦¬ìë§Œ ì…ì¥ ê°€ëŠ¥");
 		return false;
 	}
 
 	public static int intSel() {
 		while(true) {
-			System.out.print("¼±ÅÃ : ");
+			System.out.print("ì„ íƒ : ");
 			String temp = Rpg.scan.next();
 			
 			int sel = -1;
@@ -72,7 +72,7 @@ public class Rpg {
 				sel = Integer.parseInt(temp);
 				return sel;
 			} catch (Exception e) {
-				System.out.println("¼ıÀÚ¸¦ ÀÔ·ÂÇÏ¼¼¿ä");
+				System.out.println("ìˆ«ìë¥¼ ì…ë ¥í•˜ì„¸ìš”");
 			}
 		}
 	}

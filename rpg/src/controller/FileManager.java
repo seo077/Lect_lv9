@@ -19,7 +19,7 @@ public class FileManager {
 	private File memberFile = new File(MemberFileName);
 	
 	private ItemManager im = ItemManager.instance;
-	private GuildManager gm = GuildManager.instance;
+	private CharacterManager gm = CharacterManager.instance;
 	
 	public void save() {
 		String itemString = im.toString();
@@ -34,7 +34,7 @@ public class FileManager {
 			fw.write(memberString);
 			fw.close();
 		} catch (Exception e) {
-			System.out.println("ÀúÀå ½ÇÆÐ");
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		}
 	}
 

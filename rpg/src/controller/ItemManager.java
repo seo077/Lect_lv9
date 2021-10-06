@@ -23,10 +23,10 @@ public class ItemManager {
 		int size = this.itemSize();
 		for (int i = 0; i < size; i++) {
 			ItemCategory temp = this.items.get(i);
-			System.out.printf("{%d} %s <È¿°ú : %s>\n", i + 1, temp.getKind(), temp.getEffect());
+			System.out.printf("{%d} %s <íš¨ê³¼ : %s>\n", i + 1, temp.getKind(), temp.getEffect());
 			int itemSize = items.get(i).itemsSize();
 			for (int j = 0; j < itemSize; j++) {
-				System.out.printf(" ¡æ (%d) <ÀÌ¸§ : %s> <´É·Â : %d> <°¡°İ : %d>\n", j + 1, temp.getItemName(j),
+				System.out.printf(" â†’ (%d) <ì´ë¦„ : %s> <ëŠ¥ë ¥ : %d> <ê°€ê²© : %d>\n", j + 1, temp.getItemName(j),
 						temp.getItemPower(j), temp.getItemPrice(j));
 			}
 		}
@@ -34,7 +34,7 @@ public class ItemManager {
 
 	public void categoryManage() {
 		while (true) {
-			System.out.println("[1.ÀüÃ¼ Ä«Å×°í¸®] [2.Ä«Å×°í¸® Ãß°¡] [3.Ä«Å×°í¸® »èÁ¦] [0.µÚ·Î °¡±â]");
+			System.out.println("[1.ì „ì²´ ì¹´í…Œê³ ë¦¬] [2.ì¹´í…Œê³ ë¦¬ ì¶”ê°€] [3.ì¹´í…Œê³ ë¦¬ ì‚­ì œ] [0.ë’¤ë¡œ ê°€ê¸°]");
 			int sel = Rpg.intSel();
 
 			if (sel == 1) {
@@ -51,7 +51,7 @@ public class ItemManager {
 
 	public void itemManage() {
 		while (true) {
-			System.out.println("[1.ÀüÃ¼ ¾ÆÀÌÅÛ] [2.¾ÆÀÌÅÛ Ãß°¡] [3.¾ÆÀÌÅÛ »èÁ¦] [0.µÚ·Î °¡±â]");
+			System.out.println("[1.ì „ì²´ ì•„ì´í…œ] [2.ì•„ì´í…œ ì¶”ê°€] [3.ì•„ì´í…œ ì‚­ì œ] [0.ë’¤ë¡œ ê°€ê¸°]");
 			int sel = Rpg.intSel();
 
 			if (sel == 1) {
@@ -70,19 +70,19 @@ public class ItemManager {
 		int size = this.itemSize();
 		for (int i = 0; i < size; i++) {
 			ItemCategory temp = this.items.get(i);
-			System.out.printf("{%d} %s <È¿°ú : %s>\n", i + 1, temp.getKind(), temp.getEffect());
+			System.out.printf("{%d} %s <íš¨ê³¼ : %s>\n", i + 1, temp.getKind(), temp.getEffect());
 		}
 	}
 
 	private void addCategory() {
-		System.out.print("Á¾·ù : ");
+		System.out.print("ì¢…ë¥˜: ");
 		String kind = Rpg.scan.next();
 		String eff[] = ItemCategory.effects;
 		int size = eff.length;
 		for(int i=0;i<size;i++) {
 			System.out.printf("[%d] %s \n",i+1,eff[i]);
 		}
-		System.out.print("È¿°ú ¼±ÅÃ : ");
+		System.out.print("íš¨ê³¼ ì„ íƒ : ");
 		String temp = Rpg.scan.next();
 		int sel = this.intCheck(temp)-1;
 		if(sel >=0 && sel <size) {
@@ -93,7 +93,7 @@ public class ItemManager {
 	private void delCategory() {
 		this.printCategory();
 		int size = this.itemSize();
-		System.out.print("»èÁ¦ÇÒ Ä«Å×°í¸®¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
+		System.out.print("ì‚­ì œí•  ì¹´í…Œê³ ë¦¬ë¥¼ ì…ë ¥í•˜ì„¸ìš”: ");
 		String temp = Rpg.scan.next();
 
 		int sel = intCheck(temp) - 1;
@@ -109,7 +109,7 @@ public class ItemManager {
 			ItemCategory temp = this.items.get(i);
 			int itemSize = items.get(i).itemsSize();
 			for (int j = 0; j < itemSize; j++) {
-				System.out.printf("(%d) <Á¾·ù : %s> <ÀÌ¸§ : %s> <´É·Â : %d> <°¡°İ : %d>\n", idx, temp.getItemKind(j),
+				System.out.printf("(%d) <ì¢…ë¥˜ : %s> <ì´ë¦„ : %s> <ëŠ¥ë ¥: %d> <ê°€ê²© : %d>\n", idx, temp.getItemKind(j),
 						temp.getItemName(j), temp.getItemPower(j), temp.getItemPrice(j));
 				idx++;
 			}
@@ -122,16 +122,16 @@ public class ItemManager {
 		int sel = Rpg.intSel() - 1;
 
 		if (sel >= 0 && sel < size) {
-			System.out.print("¾ÆÀÌÅÛ ÀÌ¸§: ");
+			System.out.print("ì•„ì´í…œ ì´ë¦„: ");
 			String name = Rpg.scan.next();
 			while (true) {
-				System.out.print("¾ÆÀÌÅÛ ´É·Â: ");
+				System.out.print("ì•„ì´í…œ ëŠ¥ë ¥: ");
 				String temp = Rpg.scan.next();
 				int power = intCheck(temp);
 				if (power == -1) {
 					continue;
 				}
-				System.out.print("¾ÆÀÌÅÛ °¡°İ: ");
+				System.out.print("ì•„ì´í…œ ê°€ê²©: ");
 				temp = Rpg.scan.next();
 				int price = intCheck(temp);
 				if (price == -1) {
@@ -148,7 +148,7 @@ public class ItemManager {
 		try {
 			sel = Integer.parseInt(temp);
 		} catch (Exception e) {
-			System.out.println("¼ıÀÚ¸¦ ÀÔ·ÂÇÏ¼¼¿ä");
+			System.out.println("ìˆ«ìë¥¼ ì…ë ¥í•˜ì„¸ìš”");
 		}
 		return sel;
 	}
@@ -156,7 +156,7 @@ public class ItemManager {
 	private void delItem() {
 		this.printCategory();
 		int size = this.itemSize();
-		System.out.print("»èÁ¦ÇÒ Ä«Å×°í¸®¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
+		System.out.print("ì‚­ì œí•  ì¹´í…Œê³ ë¦¬ ì…ë ¥: ");
 		String tmp = Rpg.scan.next();
 
 		int sel = intCheck(tmp) - 1;
@@ -164,10 +164,10 @@ public class ItemManager {
 			ItemCategory temp = this.items.get(sel);
 			int itemSize = temp.getItemSize();
 			for (int j = 0; j < itemSize; j++) {
-				System.out.printf("(%d) <ÀÌ¸§ : %s> <´É·Â : %d> <°¡°İ : %d>\n", j + 1, temp.getItemName(j),
+				System.out.printf("(%d) <ì´ë¦„ : %s> <ëŠ¥ë ¥ : %d> <ê°€ê²©: %d>\n", j + 1, temp.getItemName(j),
 						temp.getItemPower(j), temp.getItemPrice(j));
 			}
-			System.out.print("»èÁ¦ÇÒ ¾ÆÀÌÅÛ¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
+			System.out.print("ì‚­ì œí•  ì•„ì´í…œ ì…ë ¥: ");
 			tmp = Rpg.scan.next();
 
 			int selItem = intCheck(tmp) - 1;
@@ -198,6 +198,9 @@ public class ItemManager {
 					data += this.items.get(i).getItemName(j) + "/";
 					data += this.items.get(i).getItemPower(j) + "/";
 					data += this.items.get(i).getItemPrice(j);
+					if(j != itemSize -1) {
+						data += "\n";
+					}
 				}
 			}
 		}
@@ -207,7 +210,7 @@ public class ItemManager {
 	public void setData(String[] temp) {
 		int size = temp.length;
 		if (size > 2) {
-			// ¾ÆÀÌÅÛ
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			int itemsSize = this.itemSize();
 			int check = -1;
 			for (int j = 0; j < itemsSize; j++) {
@@ -217,7 +220,7 @@ public class ItemManager {
 			}
 			this.items.get(check).addItems(temp[1], Integer.parseInt(temp[2]), Integer.parseInt(temp[3]));
 		} else {
-			// Ä«Å×°í¸®
+			// Ä«ï¿½×°ï¿½
 			this.items.add(new ItemCategory(temp[0], Integer.parseInt(temp[1])));
 		}
 	}

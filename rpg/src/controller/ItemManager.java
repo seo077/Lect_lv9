@@ -184,7 +184,7 @@ public class ItemManager {
 		int size = this.itemSize();
 		for (int i = 0; i < size; i++) {
 			data += this.items.get(i).getKind() + "/";
-			data += this.items.get(i).getEffect();
+			data += this.items.get(i).getEffectNum();
 			if (i != size - 1) {
 				data += "\n";
 			}
@@ -209,8 +209,8 @@ public class ItemManager {
 
 	public void setData(String[] temp) {
 		int size = temp.length;
-		if (size > 2) {
-			// ������
+		if (size > 3) {
+			// 아이템
 			int itemsSize = this.itemSize();
 			int check = -1;
 			for (int j = 0; j < itemsSize; j++) {
@@ -220,7 +220,7 @@ public class ItemManager {
 			}
 			this.items.get(check).addItems(temp[1], Integer.parseInt(temp[2]), Integer.parseInt(temp[3]));
 		} else {
-			// ī�װ�
+			// 카테고리
 			this.items.add(new ItemCategory(temp[0], Integer.parseInt(temp[1])));
 		}
 	}

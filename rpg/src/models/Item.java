@@ -8,6 +8,7 @@ public class Item {
 	private int price;
 	
 	public Item(String kind,String name,int power,int price) {
+		this.kind = kind;
 		this.name = name;
 		this.power = power;
 		this.price = price;

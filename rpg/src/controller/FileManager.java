@@ -34,7 +34,7 @@ public class FileManager {
 			fw.write(memberString);
 			fw.close();
 		} catch (Exception e) {
-			System.out.println("���� ����");
+			System.out.println("저장 실패");
 		}
 	}
 
@@ -49,14 +49,14 @@ public class FileManager {
 				String data = br.readLine();
 				while(data != null) {
 					String temp[] = data.split("/");
-					int size = temp.length;
 					im.setData(temp);
 					data = br.readLine();
 				}
 				fr.close();
 				br.close();
+				System.out.println("아이템 로드 성공");
 			} catch (Exception e) {
-
+				System.out.println("아이템 로드 실패");
 			}
 		}
 		if(memberFile.exists()) {
@@ -74,7 +74,9 @@ public class FileManager {
 				
 				fr.close();
 				br.close();
+				System.out.println("캐릭터 로드 성공");
 			} catch (Exception e) {
+				System.out.println("캐릭터 로드 실패");
 				// TODO: handle exception
 			}
 		}

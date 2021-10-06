@@ -23,6 +23,9 @@ public class ItemCategory {
 	public String getEffect() {
 		return this.effects[this.effect];
 	}
+	public int getEffectNum() {
+		return this.effect;
+	}
 	
 	public String getItemName(int j) {
 		return this.items.get(j).getName();
@@ -48,4 +51,5 @@ public class ItemCategory {
 	public String getItemKind(int j) {
 		return this.kind;
 	}
+	
 }

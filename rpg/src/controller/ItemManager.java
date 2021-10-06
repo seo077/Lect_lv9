@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 
+import models.Inventory;
 import models.Item;
 import models.ItemCategory;
 
@@ -9,12 +10,79 @@ public class ItemManager {
 	public static ItemManager instance = new ItemManager();
 
 	private ArrayList<ItemCategory> items = new ArrayList<>();
+	private ArrayList<Inventory>myItems = new ArrayList<>();
 
 	public void shop() {
-		// TODO Auto-generated method stub
-
+		while(true) {
+			System.out.println("내 돈 : "+Rpg.myMoney+"원");
+			int size = this.itemSize();
+			printCategory();
+			System.out.println("['0'입력 시 뒤로 가기]");
+			int sel = Rpg.intSel() - 1;
+			
+			if(sel == -1) {
+				break;
+			}
+			if (sel >= 0 && sel < size) {
+				ItemCategory temp = this.items.get(sel);
+				int itemSize = temp.getItemSize();
+				for (int j = 0; j < itemSize; j++) {
+					System.out.printf("(%d) <이름 : %s> <능력 : %d> <가격: %d>\n", j + 1, temp.getItemName(j),
+							temp.getItemPower(j), temp.getItemPrice(j));
+				}
+				System.out.print("구매할 아이템 입력: ");
+				String tmp = Rpg.scan.next();
+				
+				int selItem = intCheck(tmp) - 1;
+				if (selItem >= 0 && selItem < size) {
+					ItemCategory tt = this.items.get(sel);
+					int price = tt.getItemPrice(selItem);
+					if(Rpg.myMoney - price >= 0) {
+						String kind = tt.getKind();
+						String name = tt.getItemName(selItem);
+						if(!dupCheck(kind,name)) {
+							int effect = tt.getEffectNum();
+							int power = tt.getItemPower(selItem);
+							this.myItems.add(new Inventory(kind, effect, name, power, price));
+						}
+						Rpg.myMoney-=price;
+					}else {
+						System.out.println("잔액이 부족합니다.");
+					}
+				}
+		}
+		}
+		
 	}
 
+	
+	private boolean dupCheck(String kind,String name) {
+		int size = this.myItems.size();
+		int check = -1;
+		for(int i=0;i<size;i++) {
+			if(kind.equals(this.myItems.get(i).getKind()) && name.equals(this.myItems.get(i).getName())) {
+				check = i;
+			}
+		}
+		
+		if(check != -1) {
+			this.myItems.get(check).addCnt(1);
+		}else {
+			return false;
+		}
+		return true;
+	}
+
+
+	private void printMyItems() {
+		System.out.println("------- INVENTORY -------");
+		int size = this.myItems.size();
+		for(int i=0;i<size;i++) {
+			Inventory t = this.myItems.get(i);
+			System.out.printf("(%d) <종류 : %s> <효과 : %s> <이름 : %s> <능력 : %d> <개수 : %d> <사용 가능 : %b>\n",i+1,t.getKind(),ItemCategory.effects[t.getEffect()],t.getName(),t.getPower(),t.getCnt(),t.getAvailable());
+		}
+		System.out.println("-------------------------");
+	}
 	private int itemSize() {
 		return this.items.size();
 	}
@@ -229,5 +297,46 @@ public class ItemManager {
 
 	public void clear() {
 		this.items = new ArrayList<>();
+	}
+
+
+	public void inventory() {
+		while(true) {
+			System.out.println("[1.내 아이템] [2. 착용] [3. 판매] [0.뒤로 가기]");
+			int sel = Rpg.intSel();
+			
+			if(sel == 1) {
+				printMyItems();
+			}else if(sel == 2) {
+				//equipItem();
+			}else if(sel == 3) {
+				sellItem();
+			}else if(sel == 0) {
+				break;
+			}
+			
+		}
+	}
+	
+	private void sellItem() {
+		printMyItems();
+		int size = this.myItems.size();
+		System.out.print("판매할 아이템 입력: ");
+		String tmp = Rpg.scan.next();
+
+		int sel = intCheck(tmp) - 1;
+		if (sel >= 0 && sel < size) {
+			if(this.myItems.get(sel).getAvailable()) {
+				System.out.println("착용하고 있는 물건은 판매가 불가능합니다.");
+				return;
+			}
+			
+			this.myItems.get(sel).addCnt(-1);
+			Rpg.myMoney += this.myItems.get(sel).getPrice();
+			if(this.myItems.get(sel).getCnt() == 0) {
+				this.myItems.remove(sel);
+			}
+			System.out.println("판매 완료!");
+		}
 	}
 }

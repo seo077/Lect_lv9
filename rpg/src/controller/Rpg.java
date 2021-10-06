@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Rpg {
 	public static Rpg instance = new Rpg();
 	public static Scanner scan = new Scanner(System.in);
+	public static int myMoney = 50000;
 	
 	private FileManager fm = FileManager.instance;
 	private ItemManager im = ItemManager.instance;
@@ -22,6 +23,7 @@ public class Rpg {
 	}
 
 	private void printMainMenu() {
+		System.out.println("내 돈 : "+Rpg.myMoney+"원");
 		String menu = "[1.길드 관리] [2.상점] [3.인벤토리] [4.저장] [5.로드]\n[6.관리자] [0.종료]";
 		System.out.println(menu);
 	}
@@ -34,7 +36,7 @@ public class Rpg {
 		}else if(sel == 2) {
 			im.shop();
 		}else if(sel == 3) {
-			
+			im.inventory();
 		}else if(sel == 4) {
 			
 		}else if(sel == 5) {

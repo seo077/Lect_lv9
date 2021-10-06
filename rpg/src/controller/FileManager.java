@@ -54,9 +54,9 @@ public class FileManager {
 				}
 				fr.close();
 				br.close();
-				System.out.println("아이템 로드 성공");
+				System.out.println(">> 아이템 로드 성공");
 			} catch (Exception e) {
-				System.out.println("아이템 로드 실패");
+				System.out.println(">> 아이템 로드 실패");
 			}
 		}
 		if(memberFile.exists()) {
@@ -74,9 +74,9 @@ public class FileManager {
 				
 				fr.close();
 				br.close();
-				System.out.println("캐릭터 로드 성공");
+				System.out.println(">> 캐릭터 로드 성공");
 			} catch (Exception e) {
-				System.out.println("캐릭터 로드 실패");
+				System.out.println(">> 캐릭터 로드 실패");
 				// TODO: handle exception
 			}
 		}

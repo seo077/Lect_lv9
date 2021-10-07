@@ -169,8 +169,12 @@ public class CharacterManager {
 		String sel = Rpg.scan.next();
 		int idx = ItemManager.intCheck(sel) - 1;
 		if (idx >= 0 && idx < size) {
-			System.out.printf("멤버 <이름 :%s>를 삭제합니다.\n",this.myMembers.get(idx).getName());
-			this.myMembers.remove(idx);
+			if(this.myMembers.get(idx).getParty()) {
+				System.out.println("[삭제 불가] 이 멤버는 파티원입니다.");
+			}else {
+				System.out.printf("멤버 <이름 :%s>를 삭제합니다.\n",this.myMembers.get(idx).getName());
+				this.myMembers.remove(idx);
+			}
 		}
 	}
 

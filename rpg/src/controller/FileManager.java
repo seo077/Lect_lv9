@@ -83,26 +83,62 @@ public class FileManager {
 	}
 
 	public void ownSave() {
-		System.out.println("save");
 		String guildString = cm.guildToString();
-		System.out.println(guildString);
-		//String inventoryString = im.inventoryToString();
+		String inventoryString = im.inventoryToString();
 		
 		try {
 			fw = new FileWriter(myGuildFile);
 			fw.write(guildString);
 			fw.close();
 			
-//			fw = new FileWriter(myInventoryFile);
-//			fw.write(inventoryString);
-//			fw.close();
+			fw = new FileWriter(myInventoryFile);
+			fw.write(inventoryString);
+			fw.close();
 		} catch (Exception e) {
 			System.out.println("저장 실패");
 		}
 	}
 
 	public void ownLoad() {
-		// TODO Auto-generated method stub
+		im.inventoryClear();
+		cm.guildClear();
 		
+		if(myGuildFile.exists()) {
+			try {
+				fr = new FileReader(myGuildFile);
+				br = new BufferedReader(fr);
+				
+				String data = br.readLine();
+				while(data != null) {
+					String temp[] = data.split("/");
+					cm.setMyGuild(temp);
+					data = br.readLine();
+				}
+				
+				fr.close();
+				br.close();
+			} catch (Exception e) {
+			}
+		}
+		if(myInventoryFile.exists()) {
+			try {
+				fr = new FileReader(myInventoryFile);
+				br = new BufferedReader(fr);
+				
+				String data = br.readLine();
+				while(data != null) {
+					String temp[] = data.split("/");
+					im.setInventory(temp);
+					data = br.readLine();
+				}
+				
+				fr.close();
+				br.close();
+				System.out.println("로드 성공");
+			} catch (Exception e) {
+				System.out.println("로드 실패");
+				// TODO: handle exception
+			}
+		}
 	}
 }

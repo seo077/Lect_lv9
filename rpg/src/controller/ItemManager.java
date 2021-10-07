@@ -373,5 +373,43 @@ public class ItemManager {
 	}
 
 
+	public void inventoryClear() {
+		Rpg.myMoney = 50000;
+		this.myItems = new ArrayList<>();
+	}
+
+
+	public String inventoryToString() {
+		String data = "";
+		int size = this.myItems.size();
+		for(int i=0;i<size;i++) {
+			data += this.myItems.get(i).getKind()+"/";
+			data += this.myItems.get(i).getEffect()+"/";
+			data += this.myItems.get(i).getName()+"/";
+			data += this.myItems.get(i).getPower()+"/";
+			data += this.myItems.get(i).getPrice()+"/";
+			data += this.myItems.get(i).getCnt()+"/";
+			data += this.myItems.get(i).getAvailable();
+			if(i != size-1) {
+				data += "\n";
+			}
+		}
+		return data;
+	}
+
+
+	public void setInventory(String[] temp) {
+		String kind = temp[0];
+		int effect = Integer.parseInt(temp[1]);
+		String name = temp[2];
+		int power = Integer.parseInt(temp[3]);
+		int price = Integer.parseInt(temp[4]);
+		Rpg.myMoney -= price;
+		int cnt = Integer.parseInt(temp[5]);
+		boolean b = Boolean.parseBoolean(temp[6]);
+		this.myItems.add(new Inventory(kind, effect, name, power, price, cnt, b));
+	}
+
+
 	
 }

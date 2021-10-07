@@ -66,6 +66,7 @@ public class CharacterManager {
 					if(!this.myMembers.get(replaceIdx).getParty()) {
 						this.myMembers.get(idx[sel]).setParty(false);
 						this.myMembers.get(replaceIdx).setParty(true);
+						System.out.printf("<이름 : %s>를 <이름 : %s>로 변경\n",this.myMembers.get(idx[sel]).getName(),this.myMembers.get(replaceIdx).getName());
 					}else {
 						System.out.println("이미 파티에 참여중인 멤버입니다.");
 					}
@@ -374,6 +375,41 @@ public class CharacterManager {
 			}
 		}
 		return data.substring(0, data.length()-1);
+	}
+
+	public void setMyGuild(String[] temp) {
+		int size = temp.length;
+		if(size > 7) {
+			String name = temp[0];
+			int level = Integer.parseInt(temp[1]);
+			int price = Integer.parseInt(temp[2]);
+			int hp = Integer.parseInt(temp[3]);
+			int maxhp = Integer.parseInt(temp[4]);
+			int att = Integer.parseInt(temp[5]);
+			int def = Integer.parseInt(temp[6]);
+			Character cha = new Character(name, level, price, hp, maxhp, att, def);
+			boolean party = Boolean.parseBoolean(temp[7]);
+			if(party) {
+				Rpg.party++;
+			}
+			this.myMembers.add(new GuildMember(cha, party));
+		}else {
+			int idx = this.myMembers.size()-1;
+			String kind = temp[0];
+			int effect = Integer.parseInt(temp[1]);
+			String name = temp[2];
+			int power = Integer.parseInt(temp[3]);
+			int price = Integer.parseInt(temp[4]);
+			int cnt = Integer.parseInt(temp[5]);
+			boolean b = Boolean.parseBoolean(temp[6]);
+			Inventory inventory = new Inventory(kind, effect, name, power, price, cnt, b);
+			this.myMembers.get(idx).addItem(inventory);
+		}
+	}
+
+	public void guildClear() {
+		Rpg.party = 0;
+		this.myMembers = new ArrayList<>();
 	}
 
 	

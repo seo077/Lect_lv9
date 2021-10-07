@@ -18,6 +18,15 @@ public class Inventory {
 		this.cnt = 1;
 		this.available = true;
 	}
+	public Inventory(String kind,int effect,String name,int power,int price,int cnt,boolean b) {
+		this.kind = kind;
+		this.effect = effect;
+		this.name = name;
+		this.power = power;
+		this.price = price;
+		this.cnt = cnt;
+		this.available = b;
+	}
 
 	public String getName() {
 		return this.name;

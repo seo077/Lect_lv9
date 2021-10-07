@@ -24,6 +24,15 @@ public class Character {
 		this.att = att;
 		this.def = def;
 	}
+	public Character(String name,int level,int price,int hp,int maxhp,int att,int def) {
+		this.name = name;
+		this.level = level;
+		this.price = price;
+		this.hp = hp;
+		this.maxhp = maxhp;
+		this.att = att;
+		this.def = def;
+	}
 
 	public int getPrice() {
 		return this.price;

@@ -57,7 +57,7 @@ public class CharacterManager {
 			System.out.print("삭제할 파티원 선택 : ");
 			String s = Rpg.scan.next();
 			int sel = ItemManager.intCheck(s) - 1;
-			if (sel >= 0 && sel < 5) {
+			if (sel >= 0 && sel < 4) {
 				printMyMembers();
 				System.out.print("추가할 파티원 선택 :");
 				s = Rpg.scan.next();
@@ -143,7 +143,7 @@ public class CharacterManager {
 					int def = c.getDef();
 					
 					Character cha = new Character(name, level, hp, maxhp, att, def);
-					if(Rpg.party <5) {
+					if(Rpg.party <4) {
 						this.myMembers.add(new GuildMember(cha, true));
 						Rpg.party++;
 					}else {
@@ -170,12 +170,37 @@ public class CharacterManager {
 		int idx = ItemManager.intCheck(sel) - 1;
 		if (idx >= 0 && idx < size) {
 			if(this.myMembers.get(idx).getParty()) {
-				System.out.println("[삭제 불가] 이 멤버는 파티원입니다.");
+				int newParty = newParty(idx);
+				this.myMembers.get(newParty).setParty(true);
+				System.out.printf("멤버 <이름 :%s>를 삭제합니다.\n",this.myMembers.get(idx).getName());
+				System.out.printf("<이름 : %s>를 파티원으로 변경합니다.\n",this.myMembers.get(newParty).getName());
+				this.myMembers.remove(idx);
 			}else {
 				System.out.printf("멤버 <이름 :%s>를 삭제합니다.\n",this.myMembers.get(idx).getName());
 				this.myMembers.remove(idx);
 			}
 		}
+	}
+
+	private int newParty(int idx) {
+		int index = -1;
+		int size = this.MyMemberSize();
+		for(int i=idx+1;i<size;i++) {
+			if(!this.myMembers.get(i).getParty()) {
+				index = i;
+				break;
+			}
+		}
+		
+		if(index == -1) {
+			for(int i=0;i<idx;i++) {
+				if(!this.myMembers.get(i).getParty()) {
+					index = i;
+					break;
+				}
+			}
+		}
+		return index;
 	}
 
 	public void addCharacter() {

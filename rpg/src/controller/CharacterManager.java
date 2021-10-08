@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import models.Character;
 import models.GuildMember;
@@ -442,6 +443,7 @@ public class CharacterManager {
 	}
 
 	public boolean battle() {
+	
 		System.out.println("[1.공격] [2.방어] [3.전투 중단]");
 		int sel = Rpg.intSel();
 		
@@ -504,4 +506,28 @@ public class CharacterManager {
 		return idx;
 	}
 
+	public int pickRanParty() {
+		int idx[] = printParty();
+		Random ran = new Random();
+		int r = ran.nextInt(4);
+		
+		return idx[r];
+	}
+
+	public String getMemberName(int ranMember) {
+		return this.myMembers.get(ranMember).getName();
+	}
+
+	public void minusPartyHp(int ranMember, int att) {
+		this.myMembers.get(ranMember).setHp(att);
+	}
+
+	public int sumHp() {
+		int sum = 0;
+		int idx[] = printParty();
+		for(int i=0;i<4;i++) {
+			sum += this.myMembers.get(idx[i]).getHp();
+		}
+		return sum;
+	}
 }

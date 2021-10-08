@@ -84,4 +84,8 @@ public class GuildMember {
 	public boolean getItemAvailable(int j) {
 		return this.items.get(j).getAvailable();
 	}
+
+	public void setHp(int att) {
+		this.cha.setHp(-att);;
+	}
 }

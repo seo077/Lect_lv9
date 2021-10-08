@@ -7,6 +7,8 @@ import models.Monster;
 
 public class MonsterManager {
 	public static MonsterManager instance = new MonsterManager();
+	private CharacterManager cm = CharacterManager.instance;
+	
 	
 	private ArrayList<Monster>monster = new ArrayList<>();
 	private ArrayList<Monster>battleMonster = new ArrayList<>();
@@ -134,5 +136,20 @@ public class MonsterManager {
 		int att = Integer.parseInt(temp[2]);
 		int def = Integer.parseInt(temp[3]);
 		this.monster.add(new Monster(name, level, att, def));
+	}
+
+	private int pickRanMonster() {
+		Random ran = new Random();
+		int r = ran.nextInt(3);
+		
+		return r;
+	}
+	
+	public void atttParty() {
+		int ran = pickRanMonster();
+		int ranMember = cm.pickRanParty();
+		System.out.printf("몬스터가 공격함 -%dhp\n",this.battleMonster.get(ran).getAtt());
+		System.out.printf("멤버 <name : %s>의 hp -%d\n",cm.getMemberName(ranMember),this.battleMonster.get(ran).getAtt());
+		cm.minusPartyHp(ranMember,this.battleMonster.get(ran).getAtt());
 	}
 }

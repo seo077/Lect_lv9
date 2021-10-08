@@ -68,7 +68,17 @@ public class Rpg {
 			System.out.println("3마리의 몬스터를 처치하세요!!");
 			System.out.println("몬스터 hp : "+printHp()+"("+Rpg.monsterHp+")");
 			mm.printBattleMonster();
-			
+			try {
+				mm.atttParty();
+				mm.atttParty();
+				if(cm.sumHp() <= 0) {
+					System.out.println("몬스터 처치 실패");
+					break;
+				}
+				Thread.sleep(1000);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 			if(cm.battle()) {
 				break;
 			}

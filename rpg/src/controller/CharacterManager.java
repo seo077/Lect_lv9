@@ -33,7 +33,7 @@ public class CharacterManager {
 	}
 
 	private void replaceParty() {
-		int idx[] = new int[5];
+		int idx[] = new int[4];
 		int num = 0;
 		int size = myMembers.size();
 		if(size > 0) {
@@ -441,5 +441,67 @@ public class CharacterManager {
 		this.myMembers = new ArrayList<>();
 	}
 
+	public boolean battle() {
+		System.out.println("[1.공격] [2.방어] [3.전투 중단]");
+		int sel = Rpg.intSel();
+		
+		if(sel == 1) {
+			attMonster();
+			if(Rpg.monsterHp<=0) {
+				System.out.println("[승리]몬스터 처치 완료!");
+				return true;
+			}
+		}else if(sel == 2) {
+			defMonster();
+		}else if(sel == 3) {
+			return true;
+		}
+		return false;
+	}
+
+
+	private void attMonster() {
+		while(true) {
+			int indexs[] = this.printParty();
+			int size = this.myMembers.size();
+			System.out.println("공격할 멤버 선택 : ");
+			String sel = Rpg.scan.next();
+			int idx = ItemManager.intCheck(sel) - 1;
+			if (idx >= 0 && idx < size) {
+				Rpg.monsterHp -= this.myMembers.get(indexs[idx]).getAtt();
+				System.out.printf("몬스터의 hp가 %d만큼 감소했습니다.\n",this.myMembers.get(indexs[idx]).getAtt());
+				break;
+			}
+		}
+	}
 	
+
+	private void defMonster() {
+		
+	}
+	
+	private int[] printParty() {
+		int size = this.MyMemberSize();
+		int idx[] = new int[4];
+		int num = 0;
+		System.out.println("====== 파티원 =======");
+		for(int i=0;i<size;i++) {
+			if(this.myMembers.get(i).getParty()) {
+				idx[num] = i;
+				GuildMember tmp = myMembers.get(i);
+				System.out.printf("(%d) <name : %s> <level : %d> <hp : %d/%d> <att : %d> <def : %d>\n", num+1,
+						tmp.getName(), tmp.getLevel(),tmp.getHp(), tmp.getMaxhp(), tmp.getAtt(), tmp.getDef());
+				int itemSize = tmp.getItemSize();
+				if(itemSize > 0) {
+					for(int j=0;j<itemSize;j++) {
+						System.out.printf("--> <종류  : %s> <이름  : %s> <능력 : %s>\n ",tmp.getItemKind(j),tmp.getItemName(j),tmp.getItemPower(j));
+					}
+				}
+				num++;
+			}
+		}	
+		System.out.println("=============================");
+		return idx;
+	}
+
 }

@@ -53,6 +53,24 @@ public class FileManager {
 	public void load() {
 		im.clear();
 		cm.clear();
+		if(monsterFile.exists()) {
+			try {
+				fr = new FileReader(monsterFile);
+				br = new BufferedReader(fr);
+				
+				String data = br.readLine();
+				while(data != null) {
+					String temp[] = data.split("/");
+					mm.setData(temp);
+					data = br.readLine();
+				}
+				fr.close();
+				br.close();
+			
+			} catch (Exception e) {
+				
+			}
+		}
 		if(itemFile.exists()) {
 			try {
 				fr = new FileReader(itemFile);

@@ -11,12 +11,12 @@ public class Rpg {
 	
 	private FileManager fm = FileManager.instance;
 	private ItemManager im = ItemManager.instance;
-	private CharacterManager gm = CharacterManager.instance;
+	private CharacterManager cm = CharacterManager.instance;
 	private RpgManager rm = RpgManager.instance;
 	private MonsterManager mm = MonsterManager.instance;
 	
 	public void run() {
-		fm.load(); //상점아이템 캐릭터 불러오기
+		fm.load(); //상점아이템 캐릭터 몬스터 불러오기
 		while(true) {
 			printMainMenu();
 			if(selMainMenu()) {
@@ -35,7 +35,7 @@ public class Rpg {
 		int sel = intSel();
 		
 		if(sel == 1) {
-			gm.ownGuildManage();
+			cm.ownGuildManage();
 		}else if(sel == 2) {
 			im.shop();
 		}else if(sel == 3) {
@@ -45,7 +45,7 @@ public class Rpg {
 		}else if(sel == 5) {
 			fm.ownLoad();
 		}else if(sel == 6) {
-			if(gm.MyMemberSize() < 4) {
+			if(cm.MyMemberSize() < 4) {
 				System.out.println("[전투 불가] 파티원이 부족합니다.");
 			}else {
 				battle();
@@ -64,7 +64,33 @@ public class Rpg {
 
 	private void battle() {
 		mm.pickBattleMonster();
+		while(true) {
+			System.out.println("3마리의 몬스터를 처치하세요!!");
+			System.out.println("몬스터 hp : "+printHp()+"("+Rpg.monsterHp+")");
+			mm.printBattleMonster();
+			
+			if(cm.battle()) {
+				break;
+			}
+		}
+	}
+
+	private String printHp() {
+		String hp ="";
+		int cnt = Rpg.monsterHp/10;
+		int x = Rpg.monsterHp%10;
 		
+		for(int i=0;i<cnt;i++) {
+			hp += "■"+" ";
+		}
+		for(int i=cnt;i<10;i++) {
+			if(x > 0 && i== cnt) {
+				hp += "■"+" ";
+			}else {
+				hp += "□"+" ";
+			}
+		}
+		return hp;
 	}
 
 	private boolean checkManager() {

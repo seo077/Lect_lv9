@@ -70,6 +70,7 @@ public class MonsterManager {
 
 	public void printAllMonster() {
 		int size = this.monster.size();
+		System.out.println(size);
 		for(int i=0;i<size;i++) {
 			Monster temp = this.monster.get(i);
 			System.out.printf("(%d) <몬스터 이름 : %s> <레벨 : %d> <공격 : %d> <방어 : %d>\n",i+1,temp.getName(),temp.getLevel(),temp.getAtt(),temp.getDef());
@@ -104,6 +105,13 @@ public class MonsterManager {
 		}
 	}
 	
+	public void printBattleMonster() {
+		int size = this.battleMonster.size();
+		for(int i=0;i<size;i++) {
+			Monster temp = this.battleMonster.get(i);
+			System.out.printf("(%d) <몬스터 이름 : %s> <레벨 : %d> <공격 : %d> <방어 : %d>\n",i+1,temp.getName(),temp.getLevel(),temp.getAtt(),temp.getDef());
+		}
+	}
 	@Override
 	public String toString() {
 		String data = "";
@@ -118,5 +126,13 @@ public class MonsterManager {
 			}
 		}
 		return data;
+	}
+
+	public void setData(String[] temp) {
+		String name = temp[0];
+		int level = Integer.parseInt(temp[1]);
+		int att = Integer.parseInt(temp[2]);
+		int def = Integer.parseInt(temp[3]);
+		this.monster.add(new Monster(name, level, att, def));
 	}
 }

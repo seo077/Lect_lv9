@@ -465,7 +465,7 @@ public class CharacterManager {
 	private void attMonster() {
 		while(true) {
 			int indexs[] = this.printParty();
-			int size = this.myMembers.size();
+			int size = indexs.length;
 			System.out.println("공격할 멤버 선택 : ");
 			String sel = Rpg.scan.next();
 			int idx = ItemManager.intCheck(sel) - 1;

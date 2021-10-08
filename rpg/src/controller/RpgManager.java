@@ -5,6 +5,7 @@ public class RpgManager {
 	
 	private ItemManager im = ItemManager.instance;
 	private CharacterManager cm = CharacterManager.instance;
+	private MonsterManager mm = MonsterManager.instance;
 
 	public void manage() {
 		while (true) {
@@ -16,7 +17,7 @@ public class RpgManager {
 	}
 
 	private void printManageMenu() {
-		String menu = "[1.길드 관리] [2.아이템 관리] [0.뒤로가기]\n";
+		String menu = "[1.길드 관리] [2.아이템 관리] [3.몬스터 관리] [0.뒤로가기]\n";
 		System.out.print(menu);
 	}
 
@@ -27,10 +28,30 @@ public class RpgManager {
 			manageGuildMember();
 		}else if(sel == 2) {
 			manageItem();
+		}else if(sel == 3) {
+			manageMonster();
 		}else if(sel == 0) {
 			return true;
 		}
 		return false;
+	}
+
+	private void manageMonster() {
+		while(true) {
+			String menu = "[1.몬스터 추가] [2.몬스터 삭제] [3.전체 몬스터] [0.뒤로 가기]";
+			System.out.println(menu);
+		
+			int sel = Rpg.intSel();
+			if(sel == 1) {
+				mm.addMonster();
+			}else if(sel == 2) {
+				mm.delMonster();
+			}else if(sel == 3) {
+				mm.printAllMonster();
+			}else if(sel == 0) {
+				break;
+			}
+		}
 	}
 
 	private void manageItem() {

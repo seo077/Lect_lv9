@@ -7,11 +7,13 @@ public class Rpg {
 	public static Scanner scan = new Scanner(System.in);
 	public static int myMoney = 50000;
 	public static int party = 0;
+	public static int monsterHp = 100;
 	
 	private FileManager fm = FileManager.instance;
 	private ItemManager im = ItemManager.instance;
 	private CharacterManager gm = CharacterManager.instance;
 	private RpgManager rm = RpgManager.instance;
+	private MonsterManager mm = MonsterManager.instance;
 	
 	public void run() {
 		fm.load(); //상점아이템 캐릭터 불러오기
@@ -25,7 +27,7 @@ public class Rpg {
 
 	private void printMainMenu() {
 		System.out.println("내 돈 : "+Rpg.myMoney+"원");
-		String menu = "[1.길드 관리] [2.상점] [3.인벤토리] [4.저장] [5.로드]\n[6.관리자] [0.종료]";
+		String menu = "[1.길드 관리] [2.상점] [3.인벤토리] [4.저장] [5.로드] [6.전투]\n[7.관리자] [0.종료]";
 		System.out.println(menu);
 	}
 	
@@ -43,6 +45,12 @@ public class Rpg {
 		}else if(sel == 5) {
 			fm.ownLoad();
 		}else if(sel == 6) {
+			if(gm.MyMemberSize() < 4) {
+				System.out.println("[전투 불가] 파티원이 부족합니다.");
+			}else {
+				battle();
+			}
+		}else if(sel == 7) {
 			if(checkManager()) {
 				rm.manage();
 			}
@@ -52,6 +60,11 @@ public class Rpg {
 		}
 		
 		return false;
+	}
+
+	private void battle() {
+		mm.pickBattleMonster();
+		
 	}
 
 	private boolean checkManager() {

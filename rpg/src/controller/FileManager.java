@@ -12,11 +12,13 @@ public class FileManager {
 	private FileReader fr = null;
 	private BufferedReader br = null;
 	
+	private String MonsterFileName = "monster.txt"; //전제 몬스터
 	private String ItemFileName = "item.txt"; //전제 아이템
 	private String MemberFileName = "member.txt"; //전체 캐릭터
 	private String MyGuildFileName = "guild.txt"; //내 길드원
 	private String MyInventoryFileName = "inventory.txt"; //내 아이템
 	
+	private File monsterFile = new File(MonsterFileName);
 	private File itemFile = new File(ItemFileName);
 	private File memberFile = new File(MemberFileName);
 	private File myGuildFile = new File(MyGuildFileName);
@@ -24,12 +26,18 @@ public class FileManager {
 	
 	private ItemManager im = ItemManager.instance;
 	private CharacterManager cm = CharacterManager.instance;
+	private MonsterManager mm = MonsterManager.instance;
 	
 	public void save() {
+		String monsterString = mm.toString();
 		String itemString = im.toString();
 		String memberString = cm.toString();
 		
 		try {
+			fw = new FileWriter(monsterFile);
+			fw.write(monsterString);
+			fw.close();
+			
 			fw = new FileWriter(itemFile);
 			fw.write(itemString);
 			fw.close();

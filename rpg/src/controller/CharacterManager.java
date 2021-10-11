@@ -510,4 +510,50 @@ public class CharacterManager {
 		}
 		return party;
 	}
+
+	public void updateDieParty() {
+		Rpg.party = 0;
+		for(int i=0;i<this.MyMemberSize();i++) {
+			if(this.myMembers.get(i).getParty()) {
+				int newParty = newParty(i);
+				if(newParty == -1) {
+					System.out.println("인원이 부족합니다.");
+				}else {
+					this.myMembers.get(newParty).setParty(true);
+					System.out.printf("멤버 <이름 :%s>를 삭제합니다.\n",this.myMembers.get(i).getName());
+					
+					System.out.printf("<이름 : %s>를 파티원으로 변경합니다.\n",this.myMembers.get(newParty).getName());
+					Rpg.party++;
+				}
+				
+				
+				this.myMembers.remove(i);
+			}
+		}
+	}
+
+	public void updateDieParty(ArrayList<Character> party) {
+		int die = party.size();
+		Rpg.party-=die;
+		for(int i=0;i<this.MyMemberSize();i++) {
+			for(int j=0;j<die;j++) {
+				if(this.myMembers.get(i).getParty() && !this.myMembers.get(i).getName().equals(party.get(j).getName())) {
+					int newParty = newParty(i);
+					this.myMembers.get(newParty).setParty(true);
+					System.out.printf("멤버 <이름 :%s>를 삭제합니다.\n",this.myMembers.get(i).getName());
+					if(this.MyMemberSize()>1) {
+						System.out.printf("<이름 : %s>를 파티원으로 변경합니다.\n",this.myMembers.get(newParty).getName());
+						Rpg.party++;
+					}else {
+						System.out.println("인원이 부족합니다.");
+					}
+					this.myMembers.remove(i);
+				}
+				else if(this.myMembers.get(i).getParty() && this.myMembers.get(i).getName().equals(party.get(j).getName())) {
+					this.myMembers.get(i).plusLevel(1);
+				}
+				
+			}
+		}
+	}
 }

@@ -88,4 +88,8 @@ public class GuildMember {
 	public void setHp(int att) {
 		this.cha.setHp(-att);;
 	}
+
+	public void plusLevel(int i) {
+		this.cha.setLevel(i);
+	}
 }

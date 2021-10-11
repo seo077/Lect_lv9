@@ -99,6 +99,7 @@ public class Rpg {
 			
 		}
 		
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 	}
 
 	private boolean BattleMenu(ArrayList<Monster> monster, ArrayList<Character> party,int def) {
@@ -201,15 +202,17 @@ public class Rpg {
 			tempCha.setHp(-att);
 		}else {
 			tempCha.setHp(-tempMonster.getAtt());
-			if(tempCha.getHp() <= 0){
-				System.out.printf("파티원 <이름 : %s> 사망\n", tempCha.getName());
-				party.remove(ranParty);
-			}
-			
-			if (party.size() == 0) {
-				System.out.println("+++++파티원 전원 사망! 몬스터 처치 실패!!");
-				return false;
-			}
+		}
+		
+		if(tempCha.getHp() <= 0){
+			System.out.printf("파티원 <이름 : %s> 사망\n", tempCha.getName());
+			party.remove(ranParty);
+		}
+		
+		if (party.size() == 0) {
+			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			System.out.println("+++++파티원 전원 사망! 몬스터 처치 실패!!");
+			return false;
 		}
 		
 		return true;
@@ -240,15 +243,6 @@ public class Rpg {
 		
 		if(def == 0) {
 			tempMonster.minusHp(tempCha.getAtt());
-			if(tempMonster.getHp() <= 0){
-				System.out.printf("몬스터 <이름 : %s> 사망\n", tempMonster.getName());
-				monster.remove(ranMonster);
-			}
-			
-			if (monster.size() == 0) {
-				System.out.println("+++++몬스터 처치 성공!! 살아남은 파티원 모두 Level Up!");
-				return false;
-			}
 		}else {
 			System.out.printf("※몬스터 <이름 : %s>가 파티원<이름 : %s>의 공격을 방어함\n",  tempMonster.getName(),tempCha.getName());
 			System.out.printf("※파티원 <이름 : %s>의 공격력 %d 감소\n",  tempCha.getName(),tempMonster.getDef());
@@ -257,6 +251,17 @@ public class Rpg {
 				att = 0;
 			}
 			tempMonster.minusHp(att);
+		}
+	
+		if(tempMonster.getHp() <= 0){
+			System.out.printf("몬스터 <이름 : %s> 사망\n", tempMonster.getName());
+			monster.remove(ranMonster);
+		}
+		
+		if (monster.size() == 0) {
+			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			System.out.println("+++++몬스터 처치 성공!! 살아남은 파티원 모두 Level Up!");
+			return false;
 		}
 		
 		return true;

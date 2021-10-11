@@ -17,12 +17,32 @@ public class MonsterManager {
 		System.out.print("몬스터 이름 : ");
 		String name = Rpg.scan.next();
 		int level = 0;
+		int hp = 0;
+		int maxhp = 0;
 		int att = 0;
 		int def = 0;
 		while(true) {
 			System.out.print("몬스터 레벨 : ");
 			String temp = Rpg.scan.next();
 			level = intCheck(temp);
+			if(level == -1) {
+				continue;
+			}
+			break;
+		}
+		while(true) {
+			System.out.print("몬스터 체력 : ");
+			String temp = Rpg.scan.next();
+			hp = intCheck(temp);
+			if(level == -1) {
+				continue;
+			}
+			break;
+		}
+		while(true) {
+			System.out.print("몬스터 max체력 : ");
+			String temp = Rpg.scan.next();
+			maxhp = intCheck(temp);
 			if(level == -1) {
 				continue;
 			}
@@ -47,7 +67,7 @@ public class MonsterManager {
 			break;
 		}
 			
-		this.monster.add(new Monster(name, level, att, def));
+		this.monster.add(new Monster(name, level, hp, maxhp, att, def));
 	}
 
 	private int intCheck(String temp) {
@@ -79,10 +99,11 @@ public class MonsterManager {
 		}
 	}
 	
-	public void pickBattleMonster() {
+	public ArrayList<Monster> pickBattleMonster() {
 		int size = this.monster.size();
 		Random ran = new Random();
 		int monsterCnt = 3;
+		ArrayList<Monster> monster = new ArrayList<>();
 		int mon[] = new int[monsterCnt];
 		for(int i=0;i<monsterCnt;) {
 			int r = ran.nextInt(size);
@@ -97,23 +118,22 @@ public class MonsterManager {
 				mon[i] = r;
 				String name = this.monster.get(r).getName();
 				int level = this.monster.get(r).getLevel();
+				int hp = this.monster.get(r).getHp();
+				int maxhp = this.monster.get(r).getMaxHp();
 				int att = this.monster.get(r).getAtt();
 				int def = this.monster.get(r).getDef();
 				
-				Monster temp = new Monster(name, level, att, def);
+				Monster temp = new Monster(name, level,hp,maxhp, att, def);
 				this.battleMonster.add(temp);
+				monster.add(temp);
 				i++;
 			}
 		}
+		return monster;
 	}
 	
-	public void printBattleMonster() {
-		int size = this.battleMonster.size();
-		for(int i=0;i<size;i++) {
-			Monster temp = this.battleMonster.get(i);
-			System.out.printf("(%d) <몬스터 이름 : %s> <레벨 : %d> <공격 : %d> <방어 : %d>\n",i+1,temp.getName(),temp.getLevel(),temp.getAtt(),temp.getDef());
-		}
-	}
+
+
 	@Override
 	public String toString() {
 		String data = "";
@@ -121,6 +141,8 @@ public class MonsterManager {
 		for(int i=0;i<size;i++) {
 			data += this.monster.get(i).getName()+"/";
 			data += this.monster.get(i).getLevel()+"/";
+			data += this.monster.get(i).getHp()+"/";
+			data += this.monster.get(i).getMaxHp()+"/";
 			data += this.monster.get(i).getAtt()+"/";
 			data += this.monster.get(i).getDef();
 			if(i != size-1) {
@@ -133,23 +155,15 @@ public class MonsterManager {
 	public void setData(String[] temp) {
 		String name = temp[0];
 		int level = Integer.parseInt(temp[1]);
-		int att = Integer.parseInt(temp[2]);
-		int def = Integer.parseInt(temp[3]);
-		this.monster.add(new Monster(name, level, att, def));
+		int hp = Integer.parseInt(temp[2]);
+		int maxhp = Integer.parseInt(temp[3]);
+		int att = Integer.parseInt(temp[4]);
+		int def = Integer.parseInt(temp[5]);
+		this.monster.add(new Monster(name, level,hp,maxhp, att, def));
 	}
 
-	private int pickRanMonster() {
-		Random ran = new Random();
-		int r = ran.nextInt(3);
-		
-		return r;
-	}
 	
-	public void atttParty() {
-		int ran = pickRanMonster();
-		int ranMember = cm.pickRanParty();
-		System.out.printf("몬스터가 공격함 -%dhp\n",this.battleMonster.get(ran).getAtt());
-		System.out.printf("멤버 <name : %s>의 hp -%d\n",cm.getMemberName(ranMember),this.battleMonster.get(ran).getAtt());
-		cm.minusPartyHp(ranMember,this.battleMonster.get(ran).getAtt());
-	}
+	
+
+
 }

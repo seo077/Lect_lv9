@@ -77,6 +77,7 @@ public class Character {
 	public void setDef(int po) {
 		this.def += po;
 	}
+	
 
 	
 

@@ -6,6 +6,7 @@ import java.util.Random;
 import models.Character;
 import models.GuildMember;
 import models.Inventory;
+import models.Monster;
 
 public class CharacterManager {
 	public static CharacterManager instance = new CharacterManager();
@@ -13,6 +14,8 @@ public class CharacterManager {
 	private ArrayList<Character> members = new ArrayList<>();
 	private  ArrayList<GuildMember>myMembers = new ArrayList<>();
 
+	//private MonsterManager mm = MonsterManager.instance;
+	
 	public void ownGuildManage() {
 		while(true) {
 			String menu = "[1.길드원 목록] [2.길드원 추가] [3.길드원 삭제] [4.파티원 교체] [0.뒤로가기]";
@@ -413,6 +416,7 @@ public class CharacterManager {
 			String name = temp[0];
 			int level = Integer.parseInt(temp[1]);
 			int price = Integer.parseInt(temp[2]);
+			Rpg.myMoney -= price;
 			int hp = Integer.parseInt(temp[3]);
 			int maxhp = Integer.parseInt(temp[4]);
 			int att = Integer.parseInt(temp[5]);
@@ -442,47 +446,11 @@ public class CharacterManager {
 		this.myMembers = new ArrayList<>();
 	}
 
-	public boolean battle() {
 	
-		System.out.println("[1.공격] [2.방어] [3.전투 중단]");
-		int sel = Rpg.intSel();
-		
-		if(sel == 1) {
-			attMonster();
-			if(Rpg.monsterHp<=0) {
-				System.out.println("[승리]몬스터 처치 완료!");
-				return true;
-			}
-		}else if(sel == 2) {
-			defMonster();
-		}else if(sel == 3) {
-			return true;
-		}
-		return false;
-	}
-
-
-	private void attMonster() {
-		while(true) {
-			int indexs[] = this.printParty();
-			int size = indexs.length;
-			System.out.println("공격할 멤버 선택 : ");
-			String sel = Rpg.scan.next();
-			int idx = ItemManager.intCheck(sel) - 1;
-			if (idx >= 0 && idx < size) {
-				Rpg.monsterHp -= this.myMembers.get(indexs[idx]).getAtt();
-				System.out.printf("몬스터의 hp가 %d만큼 감소했습니다.\n",this.myMembers.get(indexs[idx]).getAtt());
-				break;
-			}
-		}
-	}
 	
 
-	private void defMonster() {
-		
-	}
 	
-	private int[] printParty() {
+	private void printParty() {
 		int size = this.MyMemberSize();
 		int idx[] = new int[4];
 		int num = 0;
@@ -503,16 +471,9 @@ public class CharacterManager {
 			}
 		}	
 		System.out.println("=============================");
-		return idx;
 	}
 
-	public int pickRanParty() {
-		int idx[] = printParty();
-		Random ran = new Random();
-		int r = ran.nextInt(4);
-		
-		return idx[r];
-	}
+
 
 	public String getMemberName(int ranMember) {
 		return this.myMembers.get(ranMember).getName();
@@ -522,12 +483,31 @@ public class CharacterManager {
 		this.myMembers.get(ranMember).setHp(att);
 	}
 
-	public int sumHp() {
-		int sum = 0;
-		int idx[] = printParty();
-		for(int i=0;i<4;i++) {
-			sum += this.myMembers.get(idx[i]).getHp();
+
+	public void dieParty(int ranMember) {
+		if(this.myMembers.get(ranMember).getHp() == 0) {
+			System.out.printf("파티원 <이름 : %s>이 사망하였습니다.\n",this.myMembers.get(ranMember).getName());
+			this.myMembers.remove(ranMember);
 		}
-		return sum;
+		
+	}
+
+
+
+	public ArrayList<Character> partyMember() {
+		ArrayList<Character>party = new ArrayList<>();
+		int size = this.MyMemberSize();
+		for(int i=0;i<size;i++) {
+			if(this.myMembers.get(i).getParty()) {
+				String name = this.myMembers.get(i).getName();
+				int level = this.myMembers.get(i).getLevel();
+				int hp = this.myMembers.get(i).getHp();
+				int maxhp = this.myMembers.get(i).getMaxhp();
+				int att = this.myMembers.get(i).getAtt();
+				int def = this.myMembers.get(i).getDef();
+				party.add(new Character(name, level, hp, maxhp, att, def));
+			}
+		}
+		return party;
 	}
 }

@@ -14,7 +14,7 @@ public class FileManager {
 	
 	private String MonsterFileName = "monster.txt"; //전제 몬스터
 	private String ItemFileName = "item.txt"; //전제 아이템
-	private String MemberFileName = "member.txt"; //전체 캐릭터
+	private String MemberFileName = "Character.txt"; //전체 캐릭터
 	private String MyGuildFileName = "guild.txt"; //내 길드원
 	private String MyInventoryFileName = "inventory.txt"; //내 아이템
 	

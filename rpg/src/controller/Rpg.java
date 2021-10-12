@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 
 import models.Character;
+import models.Inventory;
 import models.Monster;
 
 public class Rpg {
@@ -87,12 +88,14 @@ public class Rpg {
 		
 		// 파티원 정보 업데이트 + 사망한 파티원 교체
 		if(party.size() == 0) {//몬스터 처치 실패
-			cm.updateDieParty();
+			ArrayList<Inventory>items = cm.updateDieParty();
+			im.addItems(items);
 		}else if(monster.size() == 0) { //몬스터 처치 성공
 			System.out.println("**보상 : 10000원");
 			Rpg.myMoney += 10000;
 			int size = party.size();
-			cm.updateDieParty(party);
+			ArrayList<Inventory>items = cm.updateDieParty(party);
+			im.addItems(items);
 			for(int i=0;i<size;i++) {
 				System.out.printf("파티원 <name : %s>의 레벨이 1올라갑니다.\n",party.get(i).getName());
 			}

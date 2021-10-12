@@ -96,4 +96,8 @@ public class GuildMember {
 	public void LevelUp(int i) {
 		this.cha.setLevel(i);
 	}
+
+	public ArrayList<Inventory> getItems() {
+		return this.items;
+	}
 }

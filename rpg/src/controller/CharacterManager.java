@@ -14,7 +14,6 @@ public class CharacterManager {
 	private ArrayList<Character> members = new ArrayList<>();
 	private ArrayList<GuildMember> myMembers = new ArrayList<>();
 
-	// private MonsterManager mm = MonsterManager.instance;
 
 	public void ownGuildManage() {
 		while (true) {
@@ -510,10 +509,14 @@ public class CharacterManager {
 		return party;
 	}
 
-	public void updateDieParty() {
+	public ArrayList<Inventory> updateDieParty() {
 		Rpg.party = 0;
+		ArrayList<Inventory>items = new ArrayList<>();
 		for (int i = this.MyMemberSize() - 1; i >= 0; i--) {
 			if (this.myMembers.get(i).getParty()) {
+				if(this.myMembers.get(i).getItemSize()>0) {
+					items.addAll(this.myMembers.get(i).getItems());
+				}
 				int newParty = newParty(i);
 				if (newParty == -1) {
 					System.out.printf("사망한 파티원 <이름 :%s>를 삭제합니다. 파티원으로  추가할 인원이 부족합니다.\n",
@@ -528,14 +531,19 @@ public class CharacterManager {
 				this.myMembers.remove(i);
 			}
 		}
+		return items;
 	}
 
-	public void updateDieParty(ArrayList<Character> party) {
+	public ArrayList<Inventory> updateDieParty(ArrayList<Character> party) {
 		int die = party.size();
 		Rpg.party = die;
 		ArrayList<GuildMember> temp = new ArrayList<>();
+		ArrayList<Inventory>items = new ArrayList<>();
 		int size = this.MyMemberSize();
 		for (int i = 0; i < size; i++) {
+			if(this.myMembers.get(i).getItemSize()>0) {
+				items.addAll(this.myMembers.get(i).getItems());
+			}
 			if (!this.myMembers.get(i).getParty()) {
 				temp.add(this.myMembers.get(i));
 			} else {
@@ -554,5 +562,6 @@ public class CharacterManager {
 		}
 		this.myMembers = new ArrayList<>();
 		this.myMembers = temp;
+		return items;
 	}
 }

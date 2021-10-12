@@ -533,17 +533,26 @@ public class CharacterManager {
 	public void updateDieParty(ArrayList<Character> party) {
 		int die = party.size();
 		Rpg.party = die;
-		for (int i = this.MyMemberSize() - 1; i >= 0; i--) {
-			for (int j = 0; j < die; j++) {
-				if (this.myMembers.get(i).getParty()
-						&& !this.myMembers.get(i).getName().equals(party.get(j).getName())) {					
-					this.myMembers.remove(i);
-				} else if (this.myMembers.get(i).getParty()
-						&& this.myMembers.get(i).getName().equals(party.get(j).getName())) {
-					this.myMembers.get(i).plusLevel(1);
+		ArrayList<GuildMember> temp = new ArrayList<>();
+		int size = this.MyMemberSize();
+		for (int i = 0; i < size; i++) {
+			if (!this.myMembers.get(i).getParty()) {
+				temp.add(this.myMembers.get(i));
+			} else {
+				int check = -1;
+				for (int j = 0; j < die; j++) {
+					if (this.myMembers.get(i).getName().equals(party.get(j).getName())) {
+						check = j;
+					}
 				}
-
+				
+				if(check != -1) {
+					this.myMembers.get(i).LevelUp(1);
+					temp.add(this.myMembers.get(i));
+				}
 			}
 		}
+		this.myMembers = new ArrayList<>();
+		this.myMembers = temp;
 	}
 }

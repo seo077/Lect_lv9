@@ -88,7 +88,7 @@ public class Rpg {
 		// 파티원 정보 업데이트 + 사망한 파티원 교체
 		if(party.size() == 0) {//몬스터 처치 실패
 			cm.updateDieParty();
-		}else { //몬스터 처치 성공
+		}else if(monster.size() == 0) { //몬스터 처치 성공
 			System.out.println("**보상 : 10000원");
 			Rpg.myMoney += 10000;
 			int size = party.size();
@@ -96,7 +96,8 @@ public class Rpg {
 			for(int i=0;i<size;i++) {
 				System.out.printf("파티원 <name : %s>의 레벨이 1올라갑니다.\n",party.get(i).getName());
 			}
-			
+		}else {
+			System.out.println("전투를 중단합니다.");
 		}
 		
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");

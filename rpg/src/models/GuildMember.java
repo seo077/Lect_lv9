@@ -92,4 +92,8 @@ public class GuildMember {
 	public void plusLevel(int i) {
 		this.cha.setLevel(i);
 	}
+
+	public void LevelUp(int i) {
+		this.cha.setLevel(i);
+	}
 }

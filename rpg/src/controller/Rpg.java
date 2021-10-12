@@ -97,7 +97,7 @@ public class Rpg {
 				System.out.printf("파티원 <name : %s>의 레벨이 1올라갑니다.\n",party.get(i).getName());
 			}
 		}else {
-			System.out.println("전투를 중단합니다.");
+			System.out.println("*전투를 중단합니다.");
 		}
 		
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");

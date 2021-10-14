@@ -82,13 +82,11 @@ public class Game {
 	}
 	
 	private void goUp() {
-		// TODO Auto-generated method stub
 		
 	}
 	
 	private void recoverHp() {
-		// TODO Auto-generated method stub
-		
+		player.resile();
 	}
 	
 	private void consolidation() {

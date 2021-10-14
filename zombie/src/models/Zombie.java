@@ -1,9 +1,9 @@
 package models;
 
-public class Zombie extends Character{
+public class Zombie extends Unit{
 
 	public Zombie(String name,int hp,int att,int def,int pos) {
-		super.Character(name, hp, att, def, pos);
+		super(name, hp, att, def, pos);
 	}
 
 	@Override

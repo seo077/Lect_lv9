@@ -22,7 +22,7 @@ public class Hero extends Unit implements Resilient{
 
 	@Override
 	public void resile() { //È¸º¹
-		// TODO Auto-generated method stub
+		int std = super.getHp();
 		
 	}
 	

@@ -8,6 +8,10 @@ public class Game {
 		return instance;
 	}
 	
+	
+	private void setGame() {
+		
+	}
 	public void run(){
 		
 	}

@@ -203,10 +203,10 @@ public class Game {
 				break;
 			}
 			
-//			System.out.println();
-//			int dam = (zom.getAtt() - player.getDef()) * (ran.nextInt(150)+100)/100;
-//			player.damage(zom.getName(), dam);
-//			System.out.println("\n");
+			System.out.println();
+			int dam = (zom.getAtt() - player.getDef()) * (ran.nextInt(150)+100)/100;
+			player.damage(zom.getName(), dam);
+			System.out.println("\n");
 			
 			if(player.getHp()<=0) {
 				System.out.println("»ç¸ÁÇß´Ù...\n");

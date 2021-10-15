@@ -17,8 +17,8 @@ public abstract class Unit {
 		this.pos = pos;
 	}
 	
-	abstract void damage(String attackerName,int dam);
-	abstract void printInfo();
+	abstract public void damage(String attackerName,int dam);
+	abstract public void printInfo();
 	
 	public String getName() {
 		return this.name;

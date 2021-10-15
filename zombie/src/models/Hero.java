@@ -9,7 +9,7 @@ public class Hero extends Unit implements Resilient{
 	}
 	
 	@Override
-	void damage(String attackerName,int dam) {
+	public void damage(String attackerName,int dam) {
 		System.out.printf("[이름 : %s]의 공격!\n",attackerName);
 		System.out.printf("%d의 데미지!\n",dam);
 		super.setHp(-dam);

@@ -115,11 +115,60 @@ public class Game {
 			System.out.println("아무 일도 일어나지 않았다...");
 		} else {
 			System.out.println("좀비가 나타났다.");
-			boolean win = fight(zombieExist);
+			if(this.enemy.get(zombieExist).getPos() != 12) {
+				fightZombie(zombieExist);
+			}else {
+				fightZombieKing(zombieExist);
+			}
 		}
 	}
 
-	private boolean fight(int zombieExist) {
+	private void fightZombieKing(int zombieExist) {
+		ZombieKing zom = (ZombieKing) this.enemy.get(zombieExist);
+		while (true) {
+			this.player.printInfo();
+			System.out.println("===== vs =====");
+			zom.printInfo();
+			System.out.println("~~~~~~~~~~~~~~");
+			System.out.println("[무엇을 할까?]");
+			System.out.printf("1.공격   2.물약(%d개 남음)\n", this.potion); 
+			int sel = this.sel_int();
+
+			if (sel == 1) {
+				System.out.println();
+				int dam = (player.getAtt() - zom.getDef() )* (ran.nextInt(150)+100)/100;
+				zom.damage(player.getName(), dam);
+				System.out.println();
+				
+			} else if (sel == 2) {
+				if(this.potion == 0) {
+					System.out.println("물약이 더 이상 존재하지 않습니다.");
+					continue;
+				}
+				this.potion-=1;
+				player.resile();
+			} else {
+				System.out.println("다시 입력하세요");
+				continue;
+			}
+		
+			System.out.println();
+			int dam = (zom.getAtt() - player.getDef() )* (ran.nextInt(150)+100)/100;
+			player.damage(zom.getName(), dam);
+			System.out.println("\n");
+			
+			if(zom.getHp()<=0) {
+				System.out.println("승리했다!\n");
+				break;
+			}
+			if(player.getHp()<=0) {
+				System.out.println("사망했다...\n");
+				break;
+			}
+		}
+	}
+
+	private void fightZombie(int zombieExist) {
 		Zombie zom = (Zombie) this.enemy.get(zombieExist);
 		while (true) {
 			this.player.printInfo();
@@ -131,10 +180,14 @@ public class Game {
 			int sel = this.sel_int();
 
 			if (sel == 1) {
-
+				System.out.println();
+				int dam = (player.getAtt() - zom.getDef()) * (ran.nextInt(150)+100)/100;
+				zom.damage(player.getName(), dam);
+				System.out.println();
 			} else if (sel == 2) {
 				if(this.potion == 0) {
 					System.out.println("물약이 더 이상 존재하지 않습니다.");
+					continue;
 				}
 				this.potion-=1;
 				player.resile();
@@ -144,10 +197,18 @@ public class Game {
 			}
 			
 			if(zom.getHp()<=0) {
-				System.out.println("승리했다!");
+				System.out.println("승리했다!\n");
+				break;
 			}
+			
+//			System.out.println();
+//			int dam = (zom.getAtt() - player.getDef()) * (ran.nextInt(150)+100)/100;
+//			player.damage(zom.getName(), dam);
+//			System.out.println("\n");
+			
 			if(player.getHp()<=0) {
-				System.out.println("사망했다...");
+				System.out.println("사망했다...\n");
+				break;
 			}
 		}
 

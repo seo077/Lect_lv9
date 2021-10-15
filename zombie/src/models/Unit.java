@@ -50,4 +50,8 @@ public abstract class Unit {
 	public void setDef(int up) {
 		this.def += up;
 	}
+
+	public void setPos() {
+		this.pos += 1;
+	}
 }

@@ -23,7 +23,10 @@ public class Hero extends Unit implements Resilient{
 	@Override
 	public void resile() { //회복
 		int std = super.getHp();
-		
+		int up = std/10*3;
+		super.setHp(up);
+		System.out.printf("체력을 %d만큼 회복합니다.\n",up);
+		System.out.printf("[이름 : %s]의 체력 : %d\n",super.getName(),super.getHp());
 	}
 	
 	public void eatItems(GiveItems items) { //좀비 죽이면 아이템
@@ -48,6 +51,10 @@ public class Hero extends Unit implements Resilient{
 	public void printInfo() {
 		System.out.printf("[이름] : %s     [체력] : %d/%d\n",super.getName(),super.getHp(),super.getMax_hp());
 		System.out.printf("[공격력] : %d  [방어력] : %d  [위치] : %d\n",super.getAtt(),super.getDef(),super.getPos());
+	}
+
+	public void setPos() {
+		super.setPos();
 	}
 
 }

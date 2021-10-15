@@ -37,12 +37,15 @@ public class Hero extends Unit implements Resilient{
 		if(ran == 0) { //체력 증가
 			int up = std/2;
 			super.setHp(up);
+			System.out.printf("[보상] 체력 %d 증가\n",up);
 		}else if(ran == 1) { //공격력 증가
 			int up = std/10;
 			super.setAtt(up);
+			System.out.printf("[보상] 공격력 %d 증가\n",up);
 		}else if(ran == 2) { //방어력 증가
 			int up = std/10;
 			super.setDef(up);
+			System.out.printf("[보상] 방어력 %d 증가\n",up);
 		}
 		
 	}

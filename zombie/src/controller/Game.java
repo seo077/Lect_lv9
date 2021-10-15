@@ -159,6 +159,7 @@ public class Game {
 			
 			if(zom.getHp()<=0) {
 				System.out.println("½Â¸®Çß´Ù!\n");
+				player.eatItems(zom);
 				break;
 			}
 			if(player.getHp()<=0) {
@@ -198,6 +199,7 @@ public class Game {
 			
 			if(zom.getHp()<=0) {
 				System.out.println("½Â¸®Çß´Ù!\n");
+				player.eatItems(zom);
 				break;
 			}
 			

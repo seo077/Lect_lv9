@@ -1,5 +1,6 @@
 package controller;
 
-public class Stage {
-
+public abstract class Stage {
+	public abstract void run();
+	public abstract void init();
 }

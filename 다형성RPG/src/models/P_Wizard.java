@@ -6,7 +6,7 @@ public class P_Wizard extends Player implements Healable {
 		super(name, maxHp, power, skillCnt);
 	}
 
-	public void skill() { // 스킬 사용 시 -> 적2명의 공격 반사
+	public void skill() { // 스킬 사용 시 -> 적2명의 공격 절반 반사
 
 	}
 }

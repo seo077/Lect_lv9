@@ -8,12 +8,16 @@ import models.M_Wolf;
 import models.Monster;
 
 public class MonsterManager {
+	private static MonsterManager instance = new MonsterManager();
+	private MonsterManager() {}
+	public static MonsterManager getInstance() {
+		return instance;
+	}
 	
 	private String[]monster = {"¹ÚÁã","¿ÀÅ©","´Á´ë"};
-	private ArrayList<Monster> enemy = new ArrayList<>();
 	
-	private void enemySet() {
-		for(int i=0;i<4;i++) {
+	public void enemySet(ArrayList<Monster> enemy) {
+		for(int i=0;i<GameManager.enemyNum;i++) {
 			int ran = GameManager.ran.nextInt(monster.length);
 			if(ran == 0) {
 				int power[] = ranpower();

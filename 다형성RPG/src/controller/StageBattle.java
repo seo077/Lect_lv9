@@ -1,25 +1,53 @@
 package controller;
 
-public class StageBattle extends Stage{
+import java.util.ArrayList;
 
-	@Override
-	public void init() {
-		// TODO Auto-generated method stub
-		
+import models.Monster;
+import models.Player;
+
+public class StageBattle extends Stage{
+	private static StageBattle instance = new StageBattle();
+	private StageBattle() {}
+	public static StageBattle getInstance() {
+		return instance;
 	}
 
+	
+	private int diePlayer = 0;
+	private int dieMonster = 0;
+	
 	@Override
-	public void run() {
-		System.out.println("=====[BATTLE]=====");
-		
+	public boolean run() {
+		GameManager gm = GameManager.getInstance();
+		while(true) {
+			System.out.println("=====[BATTLE]=====");
+			gm.printCharacterInfo();
+			gm.battle();
+			if(playerWin()) {
+				System.out.println("승리했다!!");
+				return true;
+			}
+			if(playerLose()) {
+				System.out.println("패배했다...");
+				return false;
+			}
+			
+		}
 	}
 	
-	private void printCharacterInfo() {
-		System.out.println("=====[PLAYER]=====");
-		//플레이어 정보 프린트
-		System.out.println("=====[MONSTER]=====");
-		//몬스터 정보 프린트
-		
+	private boolean playerWin() {
+		if(this.dieMonster == GameManager.enemyNum) {
+			return true;
+		}
+		return false;
 	}
+	private boolean playerLose() {
+		if(this.diePlayer == GameManager.playerNum) {
+			return true;
+		}
+		return false;
+	}
+
+
 
 }

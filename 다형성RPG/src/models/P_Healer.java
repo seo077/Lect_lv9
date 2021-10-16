@@ -11,8 +11,9 @@ public class P_Healer extends Player{
 		Unit unit = (Unit)healable;
 		int hp = unit.getMaxHp() - unit.getCurHp();
 		unit.setCurHp(hp);
-		unit.setCurSkillCnt(unit.getMaxSkillCnt());
-		System.out.println(">> Èú ¿Ï·á!");
+		int cnt = unit.getMaxSkillCnt() - unit.getCurSkillCnt();
+		unit.setCurSkillCnt(cnt);
+		System.out.printf(">> [%s] Èú ¿Ï·á!\n",unit.getName());
 	}
 
 

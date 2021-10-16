@@ -47,8 +47,8 @@ public abstract class Unit { //몬스터와 플레이어의 최고 조상 클래스
 	public void setCurHp(int hp) {
 		this.curHp += hp;
 	}
-	public void setCurSkillCnt(int maxSkillCnt) {
-		this.curSkillCnt = maxSkillCnt;
+	public void setCurSkillCnt(int SkillCnt) {
+		this.curSkillCnt += SkillCnt;
 	}
 	
 }

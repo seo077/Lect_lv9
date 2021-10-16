@@ -8,7 +8,7 @@ public  class Monster extends Unit{
 
 	@Override
 	public void printInfo() {
-		System.out.printf("[%s] [%d/%d] [att:%d]\n",super.getName(),super.getCurHp(),super.getMaxHp());
+		System.out.printf("[%s] [%d/%d] [att:%d]\n",super.getName(),super.getCurHp(),super.getMaxHp(),super.getPower());
 	}
 
 	@Override

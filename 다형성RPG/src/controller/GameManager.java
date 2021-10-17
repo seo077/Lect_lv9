@@ -57,6 +57,7 @@ public class GameManager {
 			enemy.get(i).printInfo();
 		}
 		
+		System.out.println("~~~~~~~~~~~~~~~~~~~");
 	}
 
 	public void run() {
@@ -102,14 +103,42 @@ public class GameManager {
 	}
 
 	public boolean battle() {
-		if(playerattack()) {
+//		if(playerattack()) {
+//			return false;
+//		}
+//		this.printCharacterInfo();
+		if(monsterattack()) {
 			return false;
 		}
-	
 		return true;
 	}
 	
 	
+	private boolean monsterattack() {
+		System.out.println("=====[몬스터의 공격]=====");
+		for(int i=0;i<this.enemy.size();i++) {
+			int skill = this.ran.nextInt(3);
+			int defenderIdx = this.ran.nextInt(this.player.size());
+			if(skill == 0) {
+				System.out.printf("[%s]가 스킬을 사용합니다.\n",this.enemy.get(i).getName());
+				MonsterUseSkill(i);
+			}else {
+				this.enemy.get(i).attack(this.player.get(defenderIdx).getName());
+				this.player.get(defenderIdx).damage(this.enemy.get(i).getPower());
+			}
+			checkDiePlayer();
+			if(this.diePlayer == this.playerNum) {
+				System.out.println("패배했다...");
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+
+	
+
 	private boolean playerattack() {
 		for(int i=0;i<this.player.size();i++) {
 			if(i != 0) {
@@ -141,14 +170,25 @@ public class GameManager {
 				System.out.println("승리했다!!");
 				return true;
 			}
-			if(this.diePlayer == this.playerNum) {
-				System.out.println("패배했다...");
-				return true;
-			}
+			
 		}
 		return false;
 	}
 
+	private void checkDiePlayer() {
+		ArrayList<Player>temp = new ArrayList<>();
+		for(int i=0;i<this.player.size();i++) {
+			if(this.player.get(i).getCurHp()>0) {
+				temp.add(this.player.get(i));
+			}else {
+				System.out.printf("[%s]이 사망했습니다.\n",this.player.get(i).getName());
+				this.diePlayer++;
+			}
+		}
+		this.player = temp;
+		temp = null;
+	}
+	
 	private void checkDieEnemy() {
 		ArrayList<Monster>temp = new ArrayList<>();
 		for(int i=0;i<this.enemy.size();i++) {
@@ -163,6 +203,11 @@ public class GameManager {
 		temp = null;
 	}
 
+	private void MonsterUseSkill(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	private void playerUseSkill(int idx,int ranEnemy) {
 		String name = this.player.get(idx).getName();
 		System.out.printf("[%s가 스킬을 사용합니다.]\n",name);

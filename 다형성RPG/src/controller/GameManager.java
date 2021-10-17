@@ -107,9 +107,10 @@ public class GameManager {
 			int sel = checkInt(temp);
 			
 			if(sel == 1) {
-				this.enemy.get(ranEnemy).damage(this.player.get(i).getName(), this.player.get(i).getPower());
+				this.player.get(i).attack(this.enemy.get(ranEnemy).getName());
+				this.enemy.get(ranEnemy).damage(this.player.get(i).getPower());
 			}else if(sel == 2) {
-				playerUseSkill(i);
+				playerUseSkill(i,ranEnemy);
 				this.player.get(i).setCurSkillCnt(-1);
 			}else {
 				i--;
@@ -117,7 +118,7 @@ public class GameManager {
 		}
 	}
 
-	private void playerUseSkill(int idx) {
+	private void playerUseSkill(int idx,int ranEnemy) {
 		if(idx == 0) {
 			P_Warrior warrior = (P_Warrior) this.player.get(idx);
 			warrior.skill();

@@ -12,9 +12,19 @@ public  class Monster extends Unit{
 	}
 
 	@Override
-	public void damage(String attacker, int attackerPower) {
+	public void damage(int attackerPower) {
 		super.setCurHp(-attackerPower);
-		System.out.printf("[%s]가 [%s]에게  %d의 데미지를 입힙니다.\n",attacker,super.getName(),attackerPower);
+	}
+
+	@Override
+	public void attack(String defender) {
+		if(super.getAttackable()) {
+			System.out.printf("[%s]가 [%s]에게  %d의 데미지를 입힙니다.\n",super.getName(),defender,super.getPower());
+		}else {
+			System.out.println("마법사의 마법...");
+			System.out.println("자기스스로를 공격합니다.");
+			System.out.printf("[%s]가 [%s]에게  %d의 데미지를 입힙니다.\n",super.getName(),super.getName(),super.getPower()/2);
+		}
 	}
 
 	

@@ -14,9 +14,18 @@ public class Player extends Unit{
 	}
 
 	@Override
-	public void damage(String attacker, int attackerPower) {
+	public void damage(int attackerPower) {
 		super.setCurHp(-attackerPower);
-		System.out.printf("[%s]가 [%s]에게  %d의 데미지를 입힙니다.\n",attacker,super.getName(),attackerPower);
+	}
+
+	@Override
+	public void attack(String defender) {
+		if(super.getAttackable()) {
+			System.out.printf("[%s]가 [%s]에게  %d의 데미지를 입힙니다.\n",super.getName(),defender,super.getPower());
+		}else {
+			System.out.println("[박쥐]의 침묵스킬...");
+			System.out.printf("[%s]는 공격을 하지 못합니다.\n",super.getName());
+		}
 	}
 
 }

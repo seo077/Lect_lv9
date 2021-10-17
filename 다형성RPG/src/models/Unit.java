@@ -5,7 +5,6 @@ public abstract class Unit { //몬스터와 플레이어의 최고 조상 클래스
 	private int curHp;
 	private int maxHp;
 	private int power;
-	private boolean attackable;
 	private int curSkillCnt;
 	private int maxSkillCnt; //스킬 사용 가능 횟수(플레이어만 스킬사용횟수 제한)
 	
@@ -14,14 +13,12 @@ public abstract class Unit { //몬스터와 플레이어의 최고 조상 클래스
 		this.maxHp = maxHp;
 		this.curHp = maxHp;
 		this.power = power;
-		this.attackable = true;
 	}
 	public Unit(String name,int maxHp,int power,int skillCnt) {
 		this.name = name;
 		this.maxHp = maxHp;
 		this.curHp = maxHp;
 		this.power = power;
-		this.attackable = true;
 		this.curSkillCnt = skillCnt;
 		this.maxSkillCnt = skillCnt;
 	}
@@ -42,9 +39,7 @@ public abstract class Unit { //몬스터와 플레이어의 최고 조상 클래스
 	public int getPower() {
 		return this.power;
 	}
-	public boolean getAttackable() {
-		return this.attackable;
-	}
+	
 	public int getCurSkillCnt() {
 		return this.curSkillCnt;
 	}
@@ -52,9 +47,7 @@ public abstract class Unit { //몬스터와 플레이어의 최고 조상 클래스
 		return this.maxSkillCnt;
 	}
 	
-	public void setAttackable(boolean bool) {
-		this.attackable = bool;
-	}
+	
 	public void setCurHp(int hp) {
 		this.curHp += hp;
 	}

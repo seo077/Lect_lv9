@@ -15,6 +15,6 @@ public class P_Healer extends Player{
 		unit.setCurSkillCnt(cnt);
 		System.out.printf(">> [%s] Èú ¿Ï·á!\n",unit.getName());
 	}
-
+	
 
 }

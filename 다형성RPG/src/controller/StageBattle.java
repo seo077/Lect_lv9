@@ -12,9 +12,7 @@ public class StageBattle extends Stage{
 		return instance;
 	}
 
-	
-	private int diePlayer = 0;
-	private int dieMonster = 0;
+
 	
 	@Override
 	public boolean run() {
@@ -22,30 +20,10 @@ public class StageBattle extends Stage{
 		while(true) {
 			System.out.println("=====[BATTLE]=====");
 			gm.printCharacterInfo();
-			gm.battle();
-			if(playerWin()) {
-				System.out.println("승리했다!!");
-				return true;
-			}
-			if(playerLose()) {
-				System.out.println("패배했다...");
+			if(!gm.battle()) {
 				return false;
 			}
-			
 		}
-	}
-	
-	private boolean playerWin() {
-		if(this.dieMonster == GameManager.enemyNum) {
-			return true;
-		}
-		return false;
-	}
-	private boolean playerLose() {
-		if(this.diePlayer == GameManager.playerNum) {
-			return true;
-		}
-		return false;
 	}
 
 

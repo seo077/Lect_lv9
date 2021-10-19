@@ -9,4 +9,11 @@ public abstract class Subject {
 	}
 	
 	public abstract void printInfo();
+	
+	public String getSubName() {
+		return this.subName;
+	}
+	public int getScore() {
+		return this.score;
+	}
 }

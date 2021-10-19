@@ -26,4 +26,8 @@ public abstract class School {
 	public int getMaxNumberOfStudents() {
 		return this.maxNumberOfStudents;
 	}
+
+	public String getName() {
+		return this.departmentName;
+	}
 }

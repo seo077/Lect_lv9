@@ -9,8 +9,7 @@ public class 공학설계 extends Subject{
 
 	@Override
 	public void printInfo() {
-		// TODO Auto-generated method stub
-		
+		System.out.printf("[과목 : %s] [성적 : %d점]\n",super.getSubName(),super.getScore());
 	}
 
 }

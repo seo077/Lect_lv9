@@ -1,8 +1,8 @@
 package models;
 
-public class 의예과 extends School{
+public class 화학생물공학과 extends School implements Minor{
 
-	public 의예과(String departmentName, int numberOfStudents) {
+	public 화학생물공학과(String departmentName, int numberOfStudents) {
 		super(departmentName, numberOfStudents);
 	}
 

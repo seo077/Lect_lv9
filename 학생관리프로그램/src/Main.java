@@ -1,6 +1,9 @@
+import controller.StudentManager;
 
 public class Main {
 public static void main(String[] args) {
+	
+	StudentManager.getInstance().run();
 	//학생관리 프로그램
 	
 	//조상 클래스 :School(abstract) : [변수]과이름, 과인원 --> 학과들에 상속

@@ -1,9 +1,10 @@
 package models;
 
-public class 의예과 extends School{
+public class 기계공학과 extends School implements Minor{
 
-	public 의예과(String departmentName, int numberOfStudents) {
+	public 기계공학과(String departmentName, int numberOfStudents) {
 		super(departmentName, numberOfStudents);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override

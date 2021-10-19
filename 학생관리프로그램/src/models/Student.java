@@ -17,6 +17,23 @@ public class Student {
 		this.sub = new ArrayList<>();
 	}
 	
+	public Student(String name,int hakbun, School major ,boolean takeMinor, School minor,Subject sub) {
+		this.name = name;
+		this.hakbun = hakbun;
+		this.major = major;
+		this.takeMinor = true;
+		this.minor = minor;
+		this.sub = new ArrayList<>();
+		this.sub.add(sub);
+	}
+	public Student(String name,int hakbun, School major,Subject sub) {
+		this.name = name;
+		this.hakbun = hakbun;
+		this.major = major;
+		this.sub = new ArrayList<>();
+		this.sub.add(sub);
+	}
+	
 	
 	public void printInfo() {
 		if(this.takeMinor) {
@@ -29,10 +46,15 @@ public class Student {
 			System.out.printf("-> (%d)",i+1);
 			this.sub.get(i).printInfo();
 		}
-		
 	}
 	
-	private int subSize() {
+	public void selMinor(Minor minor) {
+		School sc = (School)minor;
+		this.takeMinor = true;
+		this.minor = sc;
+		System.out.printf("[학번 :%d]-> [부전공 : %s]선택\n",this.hakbun,this.minor);
+	}
+	public int subSize() {
 		return this.sub.size();
 	}
 
@@ -44,5 +66,37 @@ public class Student {
 
 	public String getName() {
 		return this.name;
+	}
+
+
+	public boolean getTakeMinor() {
+		return this.takeMinor;
+	}
+
+
+	public School getMajor() {
+		return this.major;
+	}
+
+
+	public School getMinor() {
+		return this.minor;
+	}
+
+
+	public void addSub(Subject subject) {
+		this.sub.add(subject);
+	}
+
+	public void printSub() {
+		int size = this.subSize();
+		for(int i=0;i<size;i++) {
+			System.out.printf("(%d)",i+1);
+			this.sub.get(i).printInfo();
+		}
+	}
+
+	public void addScore(int sel, int score) {
+		this.sub.get(sel).addScore(score);
 	}
 }

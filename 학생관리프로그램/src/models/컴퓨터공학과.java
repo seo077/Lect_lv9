@@ -17,5 +17,14 @@ public class 컴퓨터공학과 extends School implements Minor{
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public boolean checkSubject(Subject sub) {
+		try {
+			컴퓨터공학과_과목 subject = (컴퓨터공학과_과목)sub;
+			return true;
+		} catch (Exception e) {
+		}
+		return false;
+	}
 
 }

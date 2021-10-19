@@ -17,4 +17,15 @@ public class 의예과 extends School{
 		
 	}
 
+	@Override
+	public boolean checkSubject(Subject sub) {
+		try {
+			의예과_과목 subject = (의예과_과목)sub;
+			return true;
+		} catch (Exception e) {
+		
+		}
+		return false;
+	}
+
 }

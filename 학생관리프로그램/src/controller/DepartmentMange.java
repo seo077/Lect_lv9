@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 
 import models.School;
+import models.Student;
 import models.기계공학과;
 import models.의예과;
 import models.컴퓨터공학과;
@@ -10,8 +11,7 @@ import models.화학생물공학과;
 
 public class DepartmentMange extends Manage{
 	//1.전체 학과 보기
-	//2.학과 추가
-	//3.학과 삭제
+	
 	private static DepartmentMange instance = new DepartmentMange();
 	private DepartmentMange() {};
 	public static DepartmentMange getInstance(){
@@ -64,5 +64,12 @@ public class DepartmentMange extends Manage{
 	}
 	public School getMajor(int sel) {
 		return this.schoolDepartment.get(sel);
+	}
+	public void plusCurNumberOfStudent(int sel) {
+		this.schoolDepartment.get(sel).plusNum();
+	}
+	
+	public void addStudent(int sel, Student stu) {
+		this.schoolDepartment.get(sel).setStu(stu);
 	}
 }

@@ -34,6 +34,7 @@ public class StudentManager {
 	public void run() {
 		setData();
 		DepartmentMange.getInstance().setData();
+		StudentManage.getInstance().setData();
 		while(true) {
 			if(!printMenu()) {
 				break;

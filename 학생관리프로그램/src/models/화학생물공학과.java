@@ -12,6 +12,16 @@ public class 화학생물공학과 extends School implements Minor{
 	}
 
 	@Override
+	public boolean checkSubject(Subject sub) {
+		try {
+			화학생물공학과_과목 subject = (화학생물공학과_과목)sub;
+			return true;
+		} catch (Exception e) {
+		}
+		return false;
+	}
+
+	@Override
 	public void prinAlltStudents() {
 		// TODO Auto-generated method stub
 		

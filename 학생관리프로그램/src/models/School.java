@@ -16,6 +16,7 @@ public abstract class School {
 	
 	public abstract void printInfo();
 	public abstract void prinAlltStudents();
+	public abstract boolean checkSubject(Subject sub);
 	
 	public String getDepartmentName() {
 		return this.departmentName;
@@ -29,5 +30,12 @@ public abstract class School {
 
 	public String getName() {
 		return this.departmentName;
+	}
+
+	public void plusNum() {
+		this.curNumberOfStudents ++;
+	}
+	public void setStu(Student stu) {
+		
 	}
 }

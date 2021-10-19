@@ -1,6 +1,6 @@
 package models;
 
-public class 의학개론 extends Subject{
+public class 의학개론 extends Subject implements 의예과_과목{
 
 	public 의학개론(String subName) {
 		super(subName);
@@ -9,8 +9,7 @@ public class 의학개론 extends Subject{
 
 	@Override
 	public void printInfo() {
-		// TODO Auto-generated method stub
-		
+		System.out.printf("[과목 : %s] [성적 : %d점]\n",super.getSubName(),super.getScore());
 	}
 
 }

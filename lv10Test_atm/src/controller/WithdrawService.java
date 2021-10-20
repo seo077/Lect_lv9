@@ -1,17 +1,20 @@
 package controller;
 
-public class WithdrawService extends Service{
+import java.util.ArrayList;
 
-	
-	public static Service getInstance() {
-		// TODO Auto-generated method stub
-		return null;
+import models.Customer;
+
+public class WithdrawService extends Service{
+	private static WithdrawService instance = new WithdrawService();
+	private WithdrawService() {};
+	public static WithdrawService getInstance() {
+		return instance;
 	}
 
 	@Override
-	public boolean moveService() {
-		// TODO Auto-generated method stub
-		return false;
+	public ArrayList<Customer> moveService(ArrayList<Customer>customers) {
+		System.out.println("withdraw");
+		return customers;
 	}
 
 	@Override

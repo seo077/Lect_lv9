@@ -1,17 +1,20 @@
 package controller;
 
-public class OpenAccService extends Service{
+import java.util.ArrayList;
 
-	
-	public static Service getInstance() {
-		// TODO Auto-generated method stub
-		return null;
+import models.Customer;
+
+public class OpenAccService extends Service{
+	private static OpenAccService instance = new OpenAccService();
+	private OpenAccService() {};
+	public static OpenAccService getInstance() {
+		return instance;
 	}
 
 	@Override
-	public boolean moveService() {
-		// TODO Auto-generated method stub
-		return false;
+	public ArrayList<Customer> moveService(ArrayList<Customer>customers) {
+		System.out.println("open");
+		return customers;
 	}
 
 	@Override

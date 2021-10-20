@@ -1,17 +1,20 @@
 package controller;
 
-public class TransferService extends Service{
+import java.util.ArrayList;
 
-	
-	public static Service getInstance() {
-		// TODO Auto-generated method stub
-		return null;
+import models.Customer;
+
+public class TransferService extends Service{
+	private static TransferService instance = new TransferService();
+	private TransferService() {};
+	public static TransferService getInstance() {
+		return instance;
 	}
 
 	@Override
-	public boolean moveService() {
-		// TODO Auto-generated method stub
-		return false;
+	public ArrayList<Customer> moveService(ArrayList<Customer>customers) {
+		System.out.println("transfer");
+		return customers;
 	}
 
 	@Override

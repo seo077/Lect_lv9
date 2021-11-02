@@ -244,6 +244,9 @@ class SnakePanel extends MyUtill {
 				tempItemSize--;
 			}
 		}
+		
+		//*
+		requestFocusInWindow();
 	}
 
 	private void setMap() {

@@ -32,7 +32,7 @@ class MainFrame extends JFrame implements ActionListener,Runnable {
 	Thread th;
 	
 	public MainFrame() {
-		super("틱택토 게임");
+		super("오목 게임");
 		add(title);
 		init();
 		defaultStart();

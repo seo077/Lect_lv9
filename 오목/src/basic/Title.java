@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 public class Title extends JLabel{
 	public Title() {
 		setBounds(30,30,500,100);
-		setText("♡TicTacToe Game♡");
+		setText("♡오목게임♡");
 		setFont(new Font("", Font.BOLD, 30));
 		setForeground(Color.pink);
 		setHorizontalAlignment(CENTER);

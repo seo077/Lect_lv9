@@ -3,6 +3,7 @@ package nemo;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -12,6 +13,7 @@ import javax.swing.JFrame;
 class NemoPanel extends MyUtill {
 
 	private Rect nemo;
+	private boolean shift;
 	private int startX, startY, width, height;
 
 	public NemoPanel() {
@@ -21,11 +23,21 @@ class NemoPanel extends MyUtill {
 
 		addMouseMotionListener(this);
 		addMouseListener(this);
+
+		setFocusable(true);
+		addKeyListener(this);
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (e.isShiftDown()) {
+			this.shift = true;
+		}
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-
+		this.shift = false;
 		this.width = 0;
 		this.height = 0;
 		this.startX = e.getX();
@@ -37,29 +49,51 @@ class NemoPanel extends MyUtill {
 	public void mouseDragged(MouseEvent e) {
 		int x = e.getX();
 		int y = e.getY();
-
 		if (x > this.startX && y > this.startY) {
 			// 시작점 : start와 동일
-			this.width = x - this.startX;
-			this.height = y - this.startY;
+			if (this.shift) {
+				this.width = x - this.startX;
+				this.height = this.width;
+			} else {
+				this.width = x - this.startX;
+				this.height = y - this.startY;
+			}
+
 			this.nemo.setX(this.startX);
 			this.nemo.setY(this.startY);
 		} else if (x > this.startX && y < this.startY) {
 			// 시작점 : x-w,y
-			this.width = x - this.startX;
-			this.height = this.startY - y;
+			if (this.shift) {
+				this.width = x - this.startX;
+				this.height = this.width;
+			} else {
+				this.width = x - this.startX;
+				this.height = this.startY - y;
+			}
 			this.nemo.setX(x - this.width);
 			this.nemo.setY(y);
 		} else if (x < this.startX && y > this.startY) {
 			// 시작점 : x,y-h
-			this.width = this.startX - x;
-			this.height = y - this.startY;
+			if (this.shift) {
+				this.width = this.startX - x;
+				this.height = this.width;
+			} else {
+				this.width = this.startX - x;
+				this.height = y - this.startY;
+
+			}
 			this.nemo.setX(x);
 			this.nemo.setY(y - this.height);
 		} else if (x < this.startX && y < this.startY) {
 			// 시작점 : x,y
-			this.width = this.startX - x;
-			this.height = this.startY - y;
+			if (this.shift) {
+				this.width = this.startX - x;
+				this.height = this.width;
+			} else {
+				this.width = this.startX - x;
+				this.height = this.startY - y;
+
+			}
 			this.nemo.setX(x);
 			this.nemo.setY(y);
 		}
@@ -94,7 +128,6 @@ public class Nemo extends JFrame implements MouseListener {
 
 		close.setBounds(650, 650, 100, 100);
 		close.addMouseListener(this);
-		close.setVisible(true);
 		add(close);
 
 		setVisible(true);

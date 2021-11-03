@@ -31,6 +31,7 @@ public class Rpg {
 		}
 	}
 
+
 	private void printMainMenu() {
 		System.out.println("내 돈 : " + Rpg.myMoney + "원");
 		String menu = "[1.길드 관리] [2.상점] [3.인벤토리] [4.저장] [5.로드] [6.전투]\n[7.관리자] [0.종료]";

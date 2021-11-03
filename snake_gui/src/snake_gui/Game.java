@@ -147,6 +147,7 @@ class SnakePanel extends MyUtill {
 				if (check == 1) {
 					// game over
 					new Alert("GAME OVER");
+					//게임 오버 되거나 클리어하면 아예 움직이지 못하도록 처리하는 것도 좋을 듯
 				}
 
 				setSnakeBoolean(true);

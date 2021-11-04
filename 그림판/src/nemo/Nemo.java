@@ -1,4 +1,5 @@
 package nemo;
+
 //
 import java.awt.Color;
 import java.awt.Graphics;
@@ -16,12 +17,15 @@ class NemoPanel extends MyUtill {
 
 	public JButton close = new JButton("close");
 
-	private JButton shape[] = new JButton[3];
+	private JButton shape[] = new JButton[4];
 	private int sel;
 
 	private ArrayList<Rect> nemo = new ArrayList<>();
 	private ArrayList<RectSemo> semo = new ArrayList<>();
 
+	private ArrayList<RectBrush> brush = new ArrayList<>();
+	
+	private int brushCnt;
 	private int nemoCnt;
 	private int semoCnt;
 	private boolean shift;
@@ -44,8 +48,8 @@ class NemoPanel extends MyUtill {
 	}
 
 	private void setShape() {
-		String str[] = { "■", "▲", "●" };
-		for (int i = 0; i < 3; i++) {
+		String str[] = { "■", "▲", "●", "/" };
+		for (int i = 0; i < 4; i++) {
 			this.shape[i] = new JButton();
 			this.shape[i].setBounds(10, 10 + (i * 51), 50, 50);
 			this.shape[i].setText(str[i]);
@@ -76,6 +80,9 @@ class NemoPanel extends MyUtill {
 		if (e.getSource() == this.reset) {
 			this.nemo = new ArrayList<>();
 			this.semo = new ArrayList<>();
+			this.brush = new ArrayList<>();
+			
+			this.brushCnt = 0;
 			this.semoCnt = 0;
 			this.nemoCnt = 0;
 			this.sel = 0;
@@ -85,7 +92,8 @@ class NemoPanel extends MyUtill {
 			this.sel = 1;
 		} else if (e.getSource() == this.shape[2]) {
 			this.sel = 2;
-
+		} else if (e.getSource() == this.shape[3]) {
+			this.sel = 3;
 		}
 	}
 
@@ -107,10 +115,13 @@ class NemoPanel extends MyUtill {
 		if (this.sel == 1) {
 			this.semo.add(new RectSemo());
 			this.semoCnt++;
-		} else {
+		} else if(sel == 0 || sel == 2){
 			Rect temp = new Rect(startX, startY, this.width, this.height);
 			this.nemo.add(temp);
 			this.nemoCnt++;
+		}else if(this.sel == 3) {
+			this.brush.add(new RectBrush());
+			this.brushCnt++;
 		}
 	}
 
@@ -118,7 +129,7 @@ class NemoPanel extends MyUtill {
 	public void mouseReleased(MouseEvent e) {
 		if (this.sel == 1) {
 			this.semo.get(this.semoCnt - 1).setEnd(true);
-		} else {
+		} else if(this.sel == 0 || this.sel == 2) {
 			this.nemo.get(this.nemoCnt - 1).setEnd(true);
 		}
 	}
@@ -127,111 +138,117 @@ class NemoPanel extends MyUtill {
 	public void mouseDragged(MouseEvent e) {
 		int x = e.getX();
 		int y = e.getY();
-		if (x > this.startX && y > this.startY) {
-			// 시작점 : start와 동일
-			if (this.shift) {
-				if (this.sel == 1) {
-					this.width = x - this.startX;
-					this.height = (int) (this.width * Math.sqrt(3));
+		if (this.sel < 3) {
+			if (x > this.startX && y > this.startY) {
+				// 시작점 : start와 동일
+				if (this.shift) {
+					if (this.sel == 1) {
+						this.width = x - this.startX;
+						this.height = (int) (this.width * Math.sqrt(3));
+					} else {
+						this.width = x - this.startX;
+						this.height = this.width;
+					}
 				} else {
 					this.width = x - this.startX;
-					this.height = this.width;
+					this.height = y - this.startY;
 				}
-			} else {
-				this.width = x - this.startX;
-				this.height = y - this.startY;
+
+				if (this.sel != 1) {
+					this.nemo.get(this.nemoCnt - 1).setX(this.startX);
+					this.nemo.get(this.nemoCnt - 1).setY(this.startY);
+				} else {
+					int tempX[] = { startX, startX - this.width, startX + this.width };
+					int tempY[] = { startY, startY + this.height, startY + this.height };
+					this.semo.get(this.semoCnt - 1).setX(tempX);
+					this.semo.get(this.semoCnt - 1).setY(tempY);
+				}
+
+			} else if (x > this.startX && y < this.startY) {
+				// 시작점 : x-w,y
+				if (this.shift) {
+					if (this.sel == 1) {
+						this.width = x - this.startX;
+						this.height = (int) (this.width * Math.sqrt(3));
+					} else {
+						this.width = x - this.startX;
+						this.height = this.width;
+					}
+				} else {
+					this.width = x - this.startX;
+					this.height = this.startY - y;
+				}
+
+				if (this.sel != 1) {
+					this.nemo.get(this.nemoCnt - 1).setX(x - this.width);
+					this.nemo.get(this.nemoCnt - 1).setY(y);
+				} else {
+					int tempX[] = { startX, startX - this.width, startX + this.width };
+					int tempY[] = { startY, startY - this.height, startY - this.height };
+					this.semo.get(this.semoCnt - 1).setX(tempX);
+					this.semo.get(this.semoCnt - 1).setY(tempY);
+				}
+			} else if (x < this.startX && y > this.startY) {
+				// 시작점 : x,y-h
+				if (this.shift) {
+					if (this.sel == 1) {
+						this.width = this.startX - x;
+						this.height = (int) (this.width * Math.sqrt(3));
+					} else {
+						this.width = this.startX - x;
+						this.height = this.width;
+					}
+				} else {
+					this.width = this.startX - x;
+					this.height = y - this.startY;
+
+				}
+
+				if (this.sel != 1) {
+					this.nemo.get(this.nemoCnt - 1).setX(x);
+					this.nemo.get(this.nemoCnt - 1).setY(y - this.height);
+				} else {
+					int tempX[] = { startX, startX - this.width, startX + this.width };
+					int tempY[] = { startY, startY + this.height, startY + this.height };
+					this.semo.get(this.semoCnt - 1).setX(tempX);
+					this.semo.get(this.semoCnt - 1).setY(tempY);
+				}
+			} else if (x < this.startX && y < this.startY) {
+				// 시작점 : x,y
+				if (this.shift) {
+					if (this.sel == 1) {
+						this.width = this.startX - x;
+						this.height = (int) (this.width * Math.sqrt(3));
+					} else {
+						this.width = this.startX - x;
+						this.height = this.width;
+					}
+				} else {
+					this.width = this.startX - x;
+					this.height = this.startY - y;
+
+				}
+
+				if (this.sel != 1) {
+					this.nemo.get(this.nemoCnt - 1).setX(x);
+					this.nemo.get(this.nemoCnt - 1).setY(y);
+				} else {
+					int tempX[] = { startX, startX - this.width, startX + this.width };
+					int tempY[] = { startY, startY - this.height, startY - this.height };
+					this.semo.get(this.semoCnt - 1).setX(tempX);
+					this.semo.get(this.semoCnt - 1).setY(tempY);
+				}
 			}
 
 			if (this.sel != 1) {
-				this.nemo.get(this.nemoCnt - 1).setX(this.startX);
-				this.nemo.get(this.nemoCnt - 1).setY(this.startY);
-			} else {
-				int tempX[] = { startX, startX - this.width, startX + this.width };
-				int tempY[] = { startY, startY + this.height, startY + this.height };
-				this.semo.get(this.semoCnt - 1).setX(tempX);
-				this.semo.get(this.semoCnt - 1).setY(tempY);
+				this.nemo.get(this.nemoCnt - 1).setWidth(this.width);
+				this.nemo.get(this.nemoCnt - 1).setHeight(this.height);
+				this.nemo.get(this.nemoCnt - 1).setShape(this.sel);
 			}
 
-		} else if (x > this.startX && y < this.startY) {
-			// 시작점 : x-w,y
-			if (this.shift) {
-				if (this.sel == 1) {
-					this.width = x - this.startX;
-					this.height = (int) (this.width * Math.sqrt(3));
-				} else {
-					this.width = x - this.startX;
-					this.height = this.width;
-				}
-			} else {
-				this.width = x - this.startX;
-				this.height = this.startY - y;
-			}
-
-			if (this.sel != 1) {
-				this.nemo.get(this.nemoCnt - 1).setX(x - this.width);
-				this.nemo.get(this.nemoCnt - 1).setY(y);
-			} else {
-				int tempX[] = { startX, startX - this.width, startX + this.width };
-				int tempY[] = { startY, startY - this.height, startY - this.height };
-				this.semo.get(this.semoCnt - 1).setX(tempX);
-				this.semo.get(this.semoCnt - 1).setY(tempY);
-			}
-		} else if (x < this.startX && y > this.startY) {
-			// 시작점 : x,y-h
-			if (this.shift) {
-				if (this.sel == 1) {
-					this.width = this.startX - x;
-					this.height = (int) (this.width * Math.sqrt(3));
-				} else {
-					this.width = this.startX - x;
-					this.height = this.width;
-				}
-			} else {
-				this.width = this.startX - x;
-				this.height = y - this.startY;
-
-			}
-
-			if (this.sel != 1) {
-				this.nemo.get(this.nemoCnt - 1).setX(x);
-				this.nemo.get(this.nemoCnt - 1).setY(y - this.height);
-			} else {
-				int tempX[] = { startX, startX - this.width, startX + this.width };
-				int tempY[] = { startY, startY + this.height, startY + this.height };
-				this.semo.get(this.semoCnt - 1).setX(tempX);
-				this.semo.get(this.semoCnt - 1).setY(tempY);
-			}
-		} else if (x < this.startX && y < this.startY) {
-			// 시작점 : x,y
-			if (this.shift) {
-				if (this.sel == 1) {
-					this.width = this.startX - x;
-					this.height = (int) (this.width * Math.sqrt(3));
-				} else {
-					this.width = this.startX - x;
-					this.height = this.width;
-				}
-			} else {
-				this.width = this.startX - x;
-				this.height = this.startY - y;
-
-			}
-
-			if (this.sel != 1) {
-				this.nemo.get(this.nemoCnt - 1).setX(x);
-				this.nemo.get(this.nemoCnt - 1).setY(y);
-			} else {
-				int tempX[] = { startX, startX - this.width, startX + this.width };
-				int tempY[] = { startY, startY - this.height, startY - this.height };
-				this.semo.get(this.semoCnt - 1).setX(tempX);
-				this.semo.get(this.semoCnt - 1).setY(tempY);
-			}
-		}
-
-		if (this.sel != 1) {
-			this.nemo.get(this.nemoCnt - 1).setWidth(this.width);
-			this.nemo.get(this.nemoCnt - 1).setHeight(this.height);
-			this.nemo.get(this.nemoCnt - 1).setShape(this.sel);
+		}else {
+			this.brush.get(this.brushCnt-1).addX(x);
+			this.brush.get(this.brushCnt-1).addY(y);
 		}
 
 	}
@@ -267,6 +284,22 @@ class NemoPanel extends MyUtill {
 			}
 		}
 
+		if(this.brush != null) {
+			g.setColor(Color.blue);
+			for(int i=0;i<this.brushCnt;i++) {
+				int size = this.brush.get(i).getSize();
+				int x[] = new int[size];
+				int y[] = new int[size];
+				for(int j=0;j<size;j++) {
+					x[j] = this.brush.get(i).getX(j);
+					y[j] = this.brush.get(i).getY(j);
+				}
+				
+				g.drawPolyline(x, y, size);
+			}
+			
+		}
+		
 		requestFocusInWindow(); // keyListener에 대한 focus 요청
 		repaint();
 	}

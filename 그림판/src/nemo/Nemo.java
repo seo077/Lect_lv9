@@ -6,15 +6,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
 class NemoPanel extends MyUtill {
 
-	private Rect nemo;
+	private ArrayList<Rect> nemo = new ArrayList<>();
+	private int cnt;
 	private boolean shift;
 	private int startX, startY, width, height;
+	private JButton reset = new JButton();
 
 	public NemoPanel() {
 		setLayout(null);
@@ -26,6 +29,26 @@ class NemoPanel extends MyUtill {
 
 		setFocusable(true);
 		addKeyListener(this);
+		setReset();
+	}
+
+	private void setReset() {
+		this.reset.setBounds(650, 550, 100, 50);
+		this.reset.setText("RESET");
+		this.reset.setVisible(true);
+		this.reset.addActionListener(this);
+
+		add(this.reset);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == this.reset) {
+			this.nemo = new ArrayList<>();
+			this.cnt = 0;
+
+			requestFocusInWindow();
+		}
 	}
 
 	@Override
@@ -42,7 +65,9 @@ class NemoPanel extends MyUtill {
 		this.height = 0;
 		this.startX = e.getX();
 		this.startY = e.getY();
-		this.nemo = new Rect(startX, startY, this.width, this.height);
+		this.cnt++;
+		Rect temp = new Rect(startX, startY, this.width, this.height);
+		this.nemo.add(temp);
 	}
 
 	@Override
@@ -59,8 +84,8 @@ class NemoPanel extends MyUtill {
 				this.height = y - this.startY;
 			}
 
-			this.nemo.setX(this.startX);
-			this.nemo.setY(this.startY);
+			this.nemo.get(this.cnt - 1).setX(this.startX);
+			this.nemo.get(this.cnt - 1).setY(this.startY);
 		} else if (x > this.startX && y < this.startY) {
 			// 시작점 : x-w,y
 			if (this.shift) {
@@ -70,8 +95,8 @@ class NemoPanel extends MyUtill {
 				this.width = x - this.startX;
 				this.height = this.startY - y;
 			}
-			this.nemo.setX(x - this.width);
-			this.nemo.setY(y);
+			this.nemo.get(this.cnt - 1).setX(x - this.width);
+			this.nemo.get(this.cnt - 1).setY(y);
 		} else if (x < this.startX && y > this.startY) {
 			// 시작점 : x,y-h
 			if (this.shift) {
@@ -82,8 +107,8 @@ class NemoPanel extends MyUtill {
 				this.height = y - this.startY;
 
 			}
-			this.nemo.setX(x);
-			this.nemo.setY(y - this.height);
+			this.nemo.get(this.cnt - 1).setX(x);
+			this.nemo.get(this.cnt - 1).setY(y - this.height);
 		} else if (x < this.startX && y < this.startY) {
 			// 시작점 : x,y
 			if (this.shift) {
@@ -94,11 +119,11 @@ class NemoPanel extends MyUtill {
 				this.height = this.startY - y;
 
 			}
-			this.nemo.setX(x);
-			this.nemo.setY(y);
+			this.nemo.get(this.cnt - 1).setX(x);
+			this.nemo.get(this.cnt - 1).setY(y);
 		}
-		this.nemo.setWidth(this.width);
-		this.nemo.setHeight(this.height);
+		this.nemo.get(this.cnt - 1).setWidth(this.width);
+		this.nemo.get(this.cnt - 1).setHeight(this.height);
 	}
 
 	@Override
@@ -106,8 +131,10 @@ class NemoPanel extends MyUtill {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
 		if (nemo != null) {
+			for (int i = 0; i < this.cnt; i++) {
+				g.drawRect(nemo.get(i).getX(), nemo.get(i).getY(), nemo.get(i).getWidth(), nemo.get(i).getHeight());
 
-			g.drawRect(nemo.getX(), nemo.getY(), nemo.getWidth(), nemo.getHeight());
+			}
 		}
 		repaint();
 	}

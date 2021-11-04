@@ -3,6 +3,7 @@ package nemo;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -13,6 +14,8 @@ import javax.swing.JFrame;
 
 class NemoPanel extends MyUtill {
 
+	public JButton close = new JButton("close");
+	
 	private ArrayList<Rect> nemo = new ArrayList<>();
 	private int cnt;
 	private boolean shift;
@@ -21,7 +24,7 @@ class NemoPanel extends MyUtill {
 
 	public NemoPanel() {
 		setLayout(null);
-		setBounds(0, 0, 800, 650);
+		setBounds(0, 0, 800, 800);
 		setBackground(Color.yellow);
 
 		addMouseMotionListener(this);
@@ -30,6 +33,13 @@ class NemoPanel extends MyUtill {
 		setFocusable(true);
 		addKeyListener(this);
 		setReset();
+		setColse();
+	}
+
+	private void setColse() {
+		this.close.setBounds(650, 650, 100, 100);
+		this.reset.setVisible(true);
+		add(this.close);
 	}
 
 	private void setReset() {
@@ -47,7 +57,7 @@ class NemoPanel extends MyUtill {
 			this.nemo = new ArrayList<>();
 			this.cnt = 0;
 
-			requestFocusInWindow();
+			
 		}
 	}
 
@@ -133,17 +143,17 @@ class NemoPanel extends MyUtill {
 		if (nemo != null) {
 			for (int i = 0; i < this.cnt; i++) {
 				g.drawRect(nemo.get(i).getX(), nemo.get(i).getY(), nemo.get(i).getWidth(), nemo.get(i).getHeight());
-
 			}
 		}
+		
+		requestFocusInWindow(); // keyListener에 대한 focus 요청
 		repaint();
 	}
 }
 
-public class Nemo extends JFrame implements MouseListener {
+public class Nemo extends JFrame implements ActionListener {
 
 	private NemoPanel np = new NemoPanel();
-	private JButton close = new JButton("close");
 
 	public Nemo() {
 		super("Nemo");
@@ -151,49 +161,21 @@ public class Nemo extends JFrame implements MouseListener {
 		setBounds(300, 0, 800, 800);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+		np.close.addActionListener(this);
 		add(np);
-
-		close.setBounds(650, 650, 100, 100);
-		close.addMouseListener(this);
-		add(close);
-
+		
 		setVisible(true);
 		revalidate();
 
 	}
 
-	public static void main(String[] args) {
-		Nemo m = new Nemo();
-	}
-
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		if (e.getSource() == this.close)
+	public void actionPerformed(ActionEvent e) {
+		if((JButton)e.getSource() == np.close) {
 			this.dispose();
+		}
 	}
 
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 }

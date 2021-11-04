@@ -15,9 +15,15 @@ import javax.swing.JFrame;
 class NemoPanel extends MyUtill {
 
 	public JButton close = new JButton("close");
-	
+
+	private JButton shape[] = new JButton[3];
+	private int sel;
+
 	private ArrayList<Rect> nemo = new ArrayList<>();
-	private int cnt;
+	private ArrayList<RectSemo> semo = new ArrayList<>();
+
+	private int nemoCnt;
+	private int semoCnt;
 	private boolean shift;
 	private int startX, startY, width, height;
 	private JButton reset = new JButton();
@@ -33,7 +39,21 @@ class NemoPanel extends MyUtill {
 		setFocusable(true);
 		addKeyListener(this);
 		setReset();
+		setShape();
 		setColse();
+	}
+
+	private void setShape() {
+		String str[] = { "■", "▲", "●" };
+		for (int i = 0; i < 3; i++) {
+			this.shape[i] = new JButton();
+			this.shape[i].setBounds(10, 10 + (i * 51), 50, 50);
+			this.shape[i].setText(str[i]);
+			this.shape[i].addActionListener(this);
+			this.shape[i].setVisible(true);
+
+			add(this.shape[i]);
+		}
 	}
 
 	private void setColse() {
@@ -43,7 +63,7 @@ class NemoPanel extends MyUtill {
 	}
 
 	private void setReset() {
-		this.reset.setBounds(650, 550, 100, 50);
+		this.reset.setBounds(650, 590, 100, 50);
 		this.reset.setText("RESET");
 		this.reset.setVisible(true);
 		this.reset.addActionListener(this);
@@ -55,9 +75,17 @@ class NemoPanel extends MyUtill {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.reset) {
 			this.nemo = new ArrayList<>();
-			this.cnt = 0;
+			this.semo = new ArrayList<>();
+			this.semoCnt = 0;
+			this.nemoCnt = 0;
+			this.sel = 0;
+		} else if (e.getSource() == this.shape[0]) {
+			this.sel = 0;
+		} else if (e.getSource() == this.shape[1]) {
+			this.sel = 1;
+		} else if (e.getSource() == this.shape[2]) {
+			this.sel = 2;
 
-			
 		}
 	}
 
@@ -75,9 +103,24 @@ class NemoPanel extends MyUtill {
 		this.height = 0;
 		this.startX = e.getX();
 		this.startY = e.getY();
-		this.cnt++;
-		Rect temp = new Rect(startX, startY, this.width, this.height);
-		this.nemo.add(temp);
+
+		if (this.sel == 1) {
+			this.semo.add(new RectSemo());
+			this.semoCnt++;
+		} else {
+			Rect temp = new Rect(startX, startY, this.width, this.height);
+			this.nemo.add(temp);
+			this.nemoCnt++;
+		}
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		if (this.sel == 1) {
+			this.semo.get(this.semoCnt - 1).setEnd(true);
+		} else {
+			this.nemo.get(this.nemoCnt - 1).setEnd(true);
+		}
 	}
 
 	@Override
@@ -87,53 +130,110 @@ class NemoPanel extends MyUtill {
 		if (x > this.startX && y > this.startY) {
 			// 시작점 : start와 동일
 			if (this.shift) {
-				this.width = x - this.startX;
-				this.height = this.width;
+				if (this.sel == 1) {
+					this.width = x - this.startX;
+					this.height = (int) (this.width * Math.sqrt(3));
+				} else {
+					this.width = x - this.startX;
+					this.height = this.width;
+				}
 			} else {
 				this.width = x - this.startX;
 				this.height = y - this.startY;
 			}
 
-			this.nemo.get(this.cnt - 1).setX(this.startX);
-			this.nemo.get(this.cnt - 1).setY(this.startY);
+			if (this.sel != 1) {
+				this.nemo.get(this.nemoCnt - 1).setX(this.startX);
+				this.nemo.get(this.nemoCnt - 1).setY(this.startY);
+			} else {
+				int tempX[] = { startX, startX - this.width, startX + this.width };
+				int tempY[] = { startY, startY + this.height, startY + this.height };
+				this.semo.get(this.semoCnt - 1).setX(tempX);
+				this.semo.get(this.semoCnt - 1).setY(tempY);
+			}
+
 		} else if (x > this.startX && y < this.startY) {
 			// 시작점 : x-w,y
 			if (this.shift) {
-				this.width = x - this.startX;
-				this.height = this.width;
+				if (this.sel == 1) {
+					this.width = x - this.startX;
+					this.height = (int) (this.width * Math.sqrt(3));
+				} else {
+					this.width = x - this.startX;
+					this.height = this.width;
+				}
 			} else {
 				this.width = x - this.startX;
 				this.height = this.startY - y;
 			}
-			this.nemo.get(this.cnt - 1).setX(x - this.width);
-			this.nemo.get(this.cnt - 1).setY(y);
+
+			if (this.sel != 1) {
+				this.nemo.get(this.nemoCnt - 1).setX(x - this.width);
+				this.nemo.get(this.nemoCnt - 1).setY(y);
+			} else {
+				int tempX[] = { startX, startX - this.width, startX + this.width };
+				int tempY[] = { startY, startY - this.height, startY - this.height };
+				this.semo.get(this.semoCnt - 1).setX(tempX);
+				this.semo.get(this.semoCnt - 1).setY(tempY);
+			}
 		} else if (x < this.startX && y > this.startY) {
 			// 시작점 : x,y-h
 			if (this.shift) {
-				this.width = this.startX - x;
-				this.height = this.width;
+				if (this.sel == 1) {
+					this.width = this.startX - x;
+					this.height = (int) (this.width * Math.sqrt(3));
+				} else {
+					this.width = this.startX - x;
+					this.height = this.width;
+				}
 			} else {
 				this.width = this.startX - x;
 				this.height = y - this.startY;
 
 			}
-			this.nemo.get(this.cnt - 1).setX(x);
-			this.nemo.get(this.cnt - 1).setY(y - this.height);
+
+			if (this.sel != 1) {
+				this.nemo.get(this.nemoCnt - 1).setX(x);
+				this.nemo.get(this.nemoCnt - 1).setY(y - this.height);
+			} else {
+				int tempX[] = { startX, startX - this.width, startX + this.width };
+				int tempY[] = { startY, startY + this.height, startY + this.height };
+				this.semo.get(this.semoCnt - 1).setX(tempX);
+				this.semo.get(this.semoCnt - 1).setY(tempY);
+			}
 		} else if (x < this.startX && y < this.startY) {
 			// 시작점 : x,y
 			if (this.shift) {
-				this.width = this.startX - x;
-				this.height = this.width;
+				if (this.sel == 1) {
+					this.width = this.startX - x;
+					this.height = (int) (this.width * Math.sqrt(3));
+				} else {
+					this.width = this.startX - x;
+					this.height = this.width;
+				}
 			} else {
 				this.width = this.startX - x;
 				this.height = this.startY - y;
 
 			}
-			this.nemo.get(this.cnt - 1).setX(x);
-			this.nemo.get(this.cnt - 1).setY(y);
+
+			if (this.sel != 1) {
+				this.nemo.get(this.nemoCnt - 1).setX(x);
+				this.nemo.get(this.nemoCnt - 1).setY(y);
+			} else {
+				int tempX[] = { startX, startX - this.width, startX + this.width };
+				int tempY[] = { startY, startY - this.height, startY - this.height };
+				this.semo.get(this.semoCnt - 1).setX(tempX);
+				this.semo.get(this.semoCnt - 1).setY(tempY);
+			}
 		}
-		this.nemo.get(this.cnt - 1).setWidth(this.width);
-		this.nemo.get(this.cnt - 1).setHeight(this.height);
+
+		if (this.sel != 1) {
+			this.nemo.get(this.nemoCnt - 1).setWidth(this.width);
+			this.nemo.get(this.nemoCnt - 1).setHeight(this.height);
+			this.nemo.get(this.nemoCnt - 1).setShape(this.sel);
+		}
+
 	}
 
 	@Override
@@ -141,11 +241,32 @@ class NemoPanel extends MyUtill {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
 		if (nemo != null) {
-			for (int i = 0; i < this.cnt; i++) {
-				g.drawRect(nemo.get(i).getX(), nemo.get(i).getY(), nemo.get(i).getWidth(), nemo.get(i).getHeight());
+			for (int i = 0; i < this.nemoCnt; i++) {
+				if (this.nemo.get(i).isEnd()) {
+					g.setColor(Color.blue);
+				} else {
+					g.setColor(Color.red);
+				}
+				if (this.nemo.get(i).getShape() == 0) {
+					g.drawRect(nemo.get(i).getX(), nemo.get(i).getY(), nemo.get(i).getWidth(), nemo.get(i).getHeight());
+				} else if (this.nemo.get(i).getShape() == 2) {
+					g.drawRoundRect(nemo.get(i).getX(), nemo.get(i).getY(), nemo.get(i).getWidth(),
+							nemo.get(i).getHeight(), nemo.get(i).getWidth(), nemo.get(i).getHeight());
+				}
 			}
 		}
-		
+
+		if (semo != null) {
+			for (int i = 0; i < this.semoCnt; i++) {
+				if (this.semo.get(i).isEnd()) {
+					g.setColor(Color.blue);
+				} else {
+					g.setColor(Color.red);
+				}
+				g.drawPolygon(this.semo.get(i).getX(), this.semo.get(i).getY(), this.semo.get(i).getCnt());
+			}
+		}
+
 		requestFocusInWindow(); // keyListener에 대한 focus 요청
 		repaint();
 	}
@@ -163,7 +284,7 @@ public class Nemo extends JFrame implements ActionListener {
 
 		np.close.addActionListener(this);
 		add(np);
-		
+
 		setVisible(true);
 		revalidate();
 
@@ -171,11 +292,9 @@ public class Nemo extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if((JButton)e.getSource() == np.close) {
+		if ((JButton) e.getSource() == np.close) {
 			this.dispose();
 		}
 	}
-
-	
 
 }

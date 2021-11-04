@@ -2,6 +2,9 @@ package nemo;
 
 public class Rect {
 	private int x, y, width, height;
+	private int shape;
+	private boolean end;
+	
 	public Rect(int x,int y,int width, int height) {
 		this.x = x;
 		this.y = y;
@@ -31,5 +34,18 @@ public class Rect {
 	}
 	public void setHeight(int height) {
 		this.height = height;
+	}
+	public int getShape() {
+		return shape;
+	}
+	public void setShape(int shape) {
+		this.shape = shape;
+	}
+	
+	public boolean isEnd() {
+		return end;
+	}
+	public void setEnd(boolean end) {
+		this.end = end;
 	}
 }

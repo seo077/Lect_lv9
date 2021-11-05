@@ -4,6 +4,7 @@ public class Rect {
 	private int x, y, width, height;
 	private int shape;
 	private boolean end;
+	private int color;
 	
 	public Rect(int x,int y,int width, int height) {
 		this.x = x;
@@ -47,5 +48,11 @@ public class Rect {
 	}
 	public void setEnd(boolean end) {
 		this.end = end;
+	}
+	public int getColor() {
+		return color;
+	}
+	public void setColor(int color) {
+		this.color = color;
 	}
 }

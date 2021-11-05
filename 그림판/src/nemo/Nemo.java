@@ -19,7 +19,11 @@ class NemoPanel extends MyUtill {
 
 	private JButton shape[] = new JButton[4];
 	private int sel;
-
+	
+	private Color colors[] = {new Color(243, 129, 129),new Color(240, 138, 93),new Color(249, 237, 105),new Color(149, 225, 211),new Color(168, 216, 234),new Color(170, 150, 218)};
+	private JButton color[] = new JButton[6];
+	private int selColor = -1;
+	
 	private ArrayList<Rect> nemo = new ArrayList<>();
 	private ArrayList<RectSemo> semo = new ArrayList<>();
 
@@ -35,7 +39,7 @@ class NemoPanel extends MyUtill {
 	public NemoPanel() {
 		setLayout(null);
 		setBounds(0, 0, 800, 800);
-		setBackground(Color.yellow);
+		//setBackground(Color.yellow);
 
 		addMouseMotionListener(this);
 		addMouseListener(this);
@@ -44,7 +48,21 @@ class NemoPanel extends MyUtill {
 		addKeyListener(this);
 		setReset();
 		setShape();
+		setColor();
 		setColse();
+	}
+
+	private void setColor() {
+		for(int i=0;i<6;i++) {
+			this.color[i] = new JButton();
+			this.color[i].setBounds(70+(i*50),650,50,50);
+			this.color[i].setBackground(this.colors[i]);
+			this.color[i].addActionListener(this);
+			this.color[i].setVisible(true);
+			this.color[i].setBorder(null);
+			
+			add(this.color[i]);
+		}
 	}
 
 	private void setShape() {
@@ -55,6 +73,7 @@ class NemoPanel extends MyUtill {
 			this.shape[i].setText(str[i]);
 			this.shape[i].addActionListener(this);
 			this.shape[i].setVisible(true);
+			this.shape[i].setBackground(new Color(254, 245, 237));
 
 			add(this.shape[i]);
 		}
@@ -62,7 +81,8 @@ class NemoPanel extends MyUtill {
 
 	private void setColse() {
 		this.close.setBounds(650, 650, 100, 100);
-		this.reset.setVisible(true);
+		this.close.setVisible(true);
+		this.close.setBackground(new Color(254, 245, 237));
 		add(this.close);
 	}
 
@@ -71,6 +91,7 @@ class NemoPanel extends MyUtill {
 		this.reset.setText("RESET");
 		this.reset.setVisible(true);
 		this.reset.addActionListener(this);
+		this.reset.setBackground(new Color(254, 245, 237));
 
 		add(this.reset);
 	}
@@ -86,15 +107,28 @@ class NemoPanel extends MyUtill {
 			this.semoCnt = 0;
 			this.nemoCnt = 0;
 			this.sel = 0;
-		} else if (e.getSource() == this.shape[0]) {
-			this.sel = 0;
-		} else if (e.getSource() == this.shape[1]) {
-			this.sel = 1;
-		} else if (e.getSource() == this.shape[2]) {
-			this.sel = 2;
-		} else if (e.getSource() == this.shape[3]) {
-			this.sel = 3;
+			if(this.selColor != -1) {
+				this.color[this.selColor].setBounds(70+(this.selColor*50),650,50,50);
+			}
+			this.selColor = -1;
 		}
+		
+		for(int i=0;i<4;i++) {
+			if(e.getSource() == this.shape[i]) {
+				this.sel = i;
+			}
+		}
+		
+		for(int i=0; i<6;i++) {
+			if(e.getSource() == this.color[i]) {
+				if(this.selColor != -1) {
+					this.color[this.selColor].setBounds(70+(this.selColor*50),650,50,50);
+				}
+				this.selColor = i;
+				this.color[i].setBounds(70+(i*50),650,50,90);
+			}
+		}
+		
 	}
 
 	@Override
@@ -138,6 +172,8 @@ class NemoPanel extends MyUtill {
 	public void mouseDragged(MouseEvent e) {
 		int x = e.getX();
 		int y = e.getY();
+		//절대값 사용해서 간단히!(Math.abs())
+
 		if (this.sel < 3) {
 			if (x > this.startX && y > this.startY) {
 				// 시작점 : start와 동일
@@ -162,6 +198,7 @@ class NemoPanel extends MyUtill {
 					int tempY[] = { startY, startY + this.height, startY + this.height };
 					this.semo.get(this.semoCnt - 1).setX(tempX);
 					this.semo.get(this.semoCnt - 1).setY(tempY);
+					this.semo.get(this.semoCnt -1 ).setColor(this.selColor);
 				}
 
 			} else if (x > this.startX && y < this.startY) {
@@ -187,6 +224,7 @@ class NemoPanel extends MyUtill {
 					int tempY[] = { startY, startY - this.height, startY - this.height };
 					this.semo.get(this.semoCnt - 1).setX(tempX);
 					this.semo.get(this.semoCnt - 1).setY(tempY);
+					this.semo.get(this.semoCnt -1 ).setColor(this.selColor);
 				}
 			} else if (x < this.startX && y > this.startY) {
 				// 시작점 : x,y-h
@@ -212,6 +250,7 @@ class NemoPanel extends MyUtill {
 					int tempY[] = { startY, startY + this.height, startY + this.height };
 					this.semo.get(this.semoCnt - 1).setX(tempX);
 					this.semo.get(this.semoCnt - 1).setY(tempY);
+					this.semo.get(this.semoCnt -1 ).setColor(this.selColor);
 				}
 			} else if (x < this.startX && y < this.startY) {
 				// 시작점 : x,y
@@ -237,6 +276,7 @@ class NemoPanel extends MyUtill {
 					int tempY[] = { startY, startY - this.height, startY - this.height };
 					this.semo.get(this.semoCnt - 1).setX(tempX);
 					this.semo.get(this.semoCnt - 1).setY(tempY);
+					this.semo.get(this.semoCnt -1 ).setColor(this.selColor);
 				}
 			}
 
@@ -244,12 +284,15 @@ class NemoPanel extends MyUtill {
 				this.nemo.get(this.nemoCnt - 1).setWidth(this.width);
 				this.nemo.get(this.nemoCnt - 1).setHeight(this.height);
 				this.nemo.get(this.nemoCnt - 1).setShape(this.sel);
+				this.nemo.get(this.nemoCnt -1).setColor(this.selColor);
 			}
 
 		}else {
 			this.brush.get(this.brushCnt-1).addX(x);
 			this.brush.get(this.brushCnt-1).addY(y);
+			this.brush.get(this.brushCnt-1).setColor(this.selColor);
 		}
+		
 
 	}
 
@@ -257,12 +300,16 @@ class NemoPanel extends MyUtill {
 	protected void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
+		
 		if (nemo != null) {
 			for (int i = 0; i < this.nemoCnt; i++) {
-				if (this.nemo.get(i).isEnd()) {
-					g.setColor(Color.blue);
-				} else {
-					g.setColor(Color.red);
+//				if (this.nemo.get(i).isEnd()) {
+//					g.setColor(Color.blue);
+//				} else {
+//					g.setColor(Color.red);
+//				}
+				if(this.nemo.get(i).getColor() != -1) {
+					g.setColor(colors[this.nemo.get(i).getColor()]);
 				}
 				if (this.nemo.get(i).getShape() == 0) {
 					g.drawRect(nemo.get(i).getX(), nemo.get(i).getY(), nemo.get(i).getWidth(), nemo.get(i).getHeight());
@@ -275,18 +322,23 @@ class NemoPanel extends MyUtill {
 
 		if (semo != null) {
 			for (int i = 0; i < this.semoCnt; i++) {
-				if (this.semo.get(i).isEnd()) {
-					g.setColor(Color.blue);
-				} else {
-					g.setColor(Color.red);
+//				if (this.semo.get(i).isEnd()) {
+//					g.setColor(Color.blue);
+//				} else {
+//					g.setColor(Color.red);
+//				}
+				if(this.semo.get(i).getColor() != -1) {
+					g.setColor(colors[this.semo.get(i).getColor()]);
 				}
 				g.drawPolygon(this.semo.get(i).getX(), this.semo.get(i).getY(), this.semo.get(i).getCnt());
 			}
 		}
 
 		if(this.brush != null) {
-			g.setColor(Color.blue);
 			for(int i=0;i<this.brushCnt;i++) {
+				if(this.brush.get(i).getColor() != -1) {
+					g.setColor(colors[this.brush.get(i).getColor()]);
+				}
 				int size = this.brush.get(i).getSize();
 				int x[] = new int[size];
 				int y[] = new int[size];

@@ -4,6 +4,7 @@ public class RectSemo {
 	private int x[] ,y[];
 	private int cnt = 3;
 	private boolean end;
+	private int color;
 	
 	public RectSemo() {
 		this.setX(new int[this.cnt]);
@@ -36,5 +37,13 @@ public class RectSemo {
 
 	public void setEnd(boolean end) {
 		this.end = end;
+	}
+
+	public int getColor() {
+		return color;
+	}
+
+	public void setColor(int color) {
+		this.color = color;
 	}
 }

@@ -6,6 +6,7 @@ public class RectBrush {
 	private ArrayList<Integer>x;
 	private ArrayList<Integer>y;
 	private int size;
+	private int color;
 	
 	public RectBrush() {
 		this.x = new ArrayList<>();
@@ -28,6 +29,13 @@ public class RectBrush {
 
 	public int getSize() {
 		return size;
+	}
+	public int getColor() {
+		return color;
+	}
+
+	public void setColor(int color) {
+		this.color = color;
 	}
 
 }

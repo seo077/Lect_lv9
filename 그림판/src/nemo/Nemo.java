@@ -310,6 +310,8 @@ class NemoPanel extends MyUtill {
 //				}
 				if(this.nemo.get(i).getColor() != -1) {
 					g.setColor(colors[this.nemo.get(i).getColor()]);
+				}else {
+					g.setColor(Color.black);
 				}
 				if (this.nemo.get(i).getShape() == 0) {
 					g.drawRect(nemo.get(i).getX(), nemo.get(i).getY(), nemo.get(i).getWidth(), nemo.get(i).getHeight());
@@ -329,6 +331,8 @@ class NemoPanel extends MyUtill {
 //				}
 				if(this.semo.get(i).getColor() != -1) {
 					g.setColor(colors[this.semo.get(i).getColor()]);
+				}else {
+					g.setColor(Color.black);
 				}
 				g.drawPolygon(this.semo.get(i).getX(), this.semo.get(i).getY(), this.semo.get(i).getCnt());
 			}
@@ -338,6 +342,8 @@ class NemoPanel extends MyUtill {
 			for(int i=0;i<this.brushCnt;i++) {
 				if(this.brush.get(i).getColor() != -1) {
 					g.setColor(colors[this.brush.get(i).getColor()]);
+				}else {
+					g.setColor(Color.black);
 				}
 				int size = this.brush.get(i).getSize();
 				int x[] = new int[size];

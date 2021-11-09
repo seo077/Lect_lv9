@@ -155,7 +155,7 @@ public class Panel extends MyUtill {
 		if(this.run) {
 			try {
 				move();
-				Thread.sleep(50);
+				Thread.sleep(1000);
 			} catch (Exception e) {
 				// TODO: handle exception
 			}

@@ -19,6 +19,7 @@ class NemoPanel extends MyUtill {
 
 	private JButton shape[] = new JButton[4];
 	private int sel;
+	//숫자만 떠 있으면 가독성이 좋지 않음, 각각 도형을 상수로 저장해 놓기
 	
 	private Color colors[] = {new Color(243, 129, 129),new Color(240, 138, 93),new Color(249, 237, 105),new Color(149, 225, 211),new Color(168, 216, 234),new Color(170, 150, 218)};
 	private JButton color[] = new JButton[6];

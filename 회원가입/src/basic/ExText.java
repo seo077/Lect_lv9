@@ -1,6 +1,7 @@
 package basic;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -16,8 +17,11 @@ import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 class JoinFrame extends JFrame {
 	private JLabel id, pw, name;
@@ -138,6 +142,9 @@ public class ExText extends JFrame implements ActionListener, KeyListener, Mouse
 	JLabel text2 = new JLabel();
 
 	private Vector<Vector<String>> users = new Vector<>();
+	private Vector<String>colName = new Vector<>();
+	JTable table;
+
 	private int cnt = 0;
 	private int log = -1;
 
@@ -148,8 +155,9 @@ public class ExText extends JFrame implements ActionListener, KeyListener, Mouse
 
 		load();
 		setBtn();
-		printUsers();
+		//printUsers();
 		printLogin();
+		setTable();
 
 		setFocusable(true);
 		addKeyListener(this);
@@ -157,6 +165,27 @@ public class ExText extends JFrame implements ActionListener, KeyListener, Mouse
 		setVisible(true);
 		revalidate();
 
+	}
+
+	private void setTable() {
+		//JTable(Vector<?>,Vector<?>)
+		//1> 실데이터
+		//2> 컬럼이름
+		
+		this.colName.add("id");
+		this.colName.add("pw");
+		this.colName.add("name");
+		
+		this.table = new JTable(users,colName);
+
+		this.table.setBounds(50, 50, 460, 100);
+		this.table.setGridColor(Color.black);
+		this.table.setBorder(new LineBorder(Color.red));
+		
+		this.table.setCellEditor(null);
+		this.table.setDragEnabled(true);
+		this.table.setCellSelectionEnabled(true);
+		add(this.table);
 	}
 
 	private void load() {
@@ -216,14 +245,14 @@ public class ExText extends JFrame implements ActionListener, KeyListener, Mouse
 	private void setBtn() {
 		this.join = new JButton();
 		this.join.setText("join");
-		this.join.setBounds(100, 100, 100, 100);
+		this.join.setBounds(100, 200, 100, 50);
 		this.join.setVisible(true);
 		this.join.addActionListener(this);
 		add(this.join);
 
 		this.login = new JButton();
 		this.login.setText("login");
-		this.login.setBounds(220, 100, 100, 100);
+		this.login.setBounds(220, 200, 100, 50);
 		this.login.setVisible(true);
 		this.login.addActionListener(this);
 		add(this.login);
@@ -277,9 +306,11 @@ public class ExText extends JFrame implements ActionListener, KeyListener, Mouse
 			this.users.get(this.cnt).add(pw);
 			this.users.get(this.cnt).add(name);
 			this.cnt++;
+			
+			table.updateUI();
 			save();
 			this.joinFrame.dispose();
-			this.printUsers();
+			//this.printUsers();
 		}
 
 		else if (e.getSource() == this.loginFrame.done) {

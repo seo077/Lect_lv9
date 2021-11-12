@@ -7,6 +7,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -118,7 +122,12 @@ class LoginFrame extends JFrame {
 }
 
 public class ExText extends JFrame implements ActionListener, KeyListener, MouseListener {
-
+	String fileName = "È¸¿ø.txt";
+	BufferedReader br = null;
+	FileWriter fw = null;
+	FileReader fr = null;
+	
+	File file = new File(fileName);
 	JLabel dataField = new JLabel(String.format("<html>%s<br>%d</html>", "", 123));
 	JButton login, join;
 
@@ -137,6 +146,7 @@ public class ExText extends JFrame implements ActionListener, KeyListener, Mouse
 		setBounds(100, 100, 400, 300);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+		load();
 		setBtn();
 		printUsers();
 		printLogin();
@@ -147,6 +157,32 @@ public class ExText extends JFrame implements ActionListener, KeyListener, Mouse
 		setVisible(true);
 		revalidate();
 
+	}
+
+	private void load() {
+		if(file.exists()) {
+			try {
+				fr = new FileReader(file);
+				br = new BufferedReader(fr);
+				
+				String data = br.readLine();
+				while(data != null) {
+					String str[] = data.split("/");
+					this.users.add(new Vector());
+					this.users.get(this.cnt).add(str[0]);
+					this.users.get(this.cnt).add(str[1]);
+					this.users.get(this.cnt).add(str[2]);
+					this.cnt++;
+					data = br.readLine();
+				}
+				
+				fr.close();
+				br.close();
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
 	}
 
 	private void printLogin() {
@@ -171,7 +207,7 @@ public class ExText extends JFrame implements ActionListener, KeyListener, Mouse
 			}
 		}
 		text += "</html>";
-		this.text.setBounds(10, 50, 300, 50);
+		this.text.setBounds(10, 50, 300, 300);
 		this.text.setText(text);
 		this.text.setVisible(true);
 		add(this.text);
@@ -193,9 +229,7 @@ public class ExText extends JFrame implements ActionListener, KeyListener, Mouse
 		add(this.login);
 	}
 
-	public static void main(String[] args) {
-		new ExText();
-	}
+
 
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -243,6 +277,7 @@ public class ExText extends JFrame implements ActionListener, KeyListener, Mouse
 			this.users.get(this.cnt).add(pw);
 			this.users.get(this.cnt).add(name);
 			this.cnt++;
+			save();
 			this.joinFrame.dispose();
 			this.printUsers();
 		}
@@ -262,6 +297,26 @@ public class ExText extends JFrame implements ActionListener, KeyListener, Mouse
 			}
 			this.loginFrame.dispose();
 			this.printLogin();
+		}
+	}
+
+	private void save() {
+		String data = "";
+		for(int i=0;i<this.cnt;i++) {
+			data += this.users.get(i).get(0)+"/";
+			data += this.users.get(i).get(1)+"/";
+			if(i != this.cnt-1) {
+				data += this.users.get(i).get(2)+"\n";
+			}else {
+				data += this.users.get(i).get(2);
+			}
+		}
+		
+		try {
+			fw = new FileWriter(fileName);
+			fw.write(data);
+			fw.close();
+		} catch (Exception e) {
 		}
 	}
 

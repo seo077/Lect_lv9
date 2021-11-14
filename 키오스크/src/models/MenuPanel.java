@@ -104,10 +104,7 @@ public class MenuPanel extends MyUtill {
 		this.cancle.setBounds(290, 700, 150, 50);
 		this.cancle.setVisible(true);
 		this.cancle.addActionListener(this);
-		myMenu = new Vector<>();
-		this.table.updateUI();
-		totalCnt = 0;
-		totalPrice =0;
+	
 		add(this.cancle,0);
 		
 		this.pay = new JButton("결제하기");
@@ -142,6 +139,10 @@ public class MenuPanel extends MyUtill {
 			}
 		}else if(e.getSource() == this.cancle) {
 			this.nextPage = "main";
+			myMenu = new Vector<>();
+			this.table.updateUI();
+			totalCnt = 0;
+			totalPrice =0;
 		}else if(e.getSource() == this.pay) {
 			this.nextPage = "pay";
 		}

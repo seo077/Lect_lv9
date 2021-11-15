@@ -3,9 +3,11 @@ package models;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -25,20 +27,41 @@ class InDrinkAlert extends JFrame{
 	}
 }
 
+
 public class MainPanel extends MyUtill{
 	private Images images[] = new Images[4];
 	private JLabel takeout, inDrink;
 	private int idx = 0;
 	private String nextPage ="";
+	private JButton manager;
 	
 	public MainPanel() {
 		setLayout(null);
 		setBounds(0, 0, 620, 800);
 		addMouseListener(this);
+		
 		setMainImages();
 		setLabel();
+		setManager();
 	}
 
+	private void setManager() {
+		this.manager = new JButton();
+		this.manager.setText("°ü¸®ÀÚ");
+		this.manager.setBounds(500, 10, 100, 50);
+		this.manager.setVisible(true);
+		this.manager.addActionListener(this);
+		
+		add(this.manager);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == this.manager) {
+			this.nextPage = "manager";
+		}
+	}
+	
 	private void setLabel() {
 		Image im1 = new ImageIcon("menuImages/takeout.png").getImage().getScaledInstance(290, 145, Image.SCALE_SMOOTH);
 		this.takeout = new JLabel(new ImageIcon(im1));

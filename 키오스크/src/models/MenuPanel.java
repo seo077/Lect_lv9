@@ -40,6 +40,7 @@ public class MenuPanel extends MyUtill {
 	public static Vector<String> col = new Vector<>(); //제품명, 수량, 가격
 	public static int totalPrice;
 	public static int totalCnt;
+	public static int sales;
 	
 	private JScrollPane scroll;
 	private JTable table;
@@ -247,6 +248,7 @@ public class MenuPanel extends MyUtill {
 						temp.add(this.coffees[i].getPrice()+"");
 						totalCnt++;
 						totalPrice+=this.coffees[i].getPrice();
+						sales+=this.coffees[i].getPrice();
 						this.myMenu.add(temp);
 					}else {
 						int temp = Integer.parseInt(this.myMenu.get(check).get(1));
@@ -254,7 +256,7 @@ public class MenuPanel extends MyUtill {
 						this.myMenu.get(check).set(1, cnt+"");
 						totalCnt++;
 						totalPrice+=this.coffees[i].getPrice();
-						
+						sales+=this.coffees[i].getPrice();
 					}
 					this.table.updateUI();
 					
@@ -277,7 +279,7 @@ public class MenuPanel extends MyUtill {
 						temp.add(this.teas[i].getPrice()+"");
 						totalCnt++;
 						totalPrice+=this.teas[i].getPrice();
-					
+						sales+=this.coffees[i].getPrice();
 						this.myMenu.add(temp);
 					}else {
 						int temp = Integer.parseInt(this.myMenu.get(check).get(1));
@@ -285,6 +287,7 @@ public class MenuPanel extends MyUtill {
 						this.myMenu.get(check).set(1, cnt+"");
 						totalCnt++;
 						totalPrice+=this.coffees[i].getPrice();
+						sales+=this.coffees[i].getPrice();
 					}
 					this.table.updateUI();
 				}

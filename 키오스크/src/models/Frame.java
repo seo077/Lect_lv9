@@ -30,8 +30,8 @@ public class Frame extends JFrame implements Runnable{
 		th.start();
 		
 		setVisible(true);
-		revalidate();
 		setLocationRelativeTo(null);
+		revalidate();
 	}
 
 
@@ -39,6 +39,7 @@ public class Frame extends JFrame implements Runnable{
 		this.panels.put("main", new MainPanel());
 		this.panels.put("menu", new MenuPanel());
 		this.panels.put("pay", new PayPanel());
+		this.panels.put("manager", new ManagerPanel());
 	}
 
 
@@ -52,11 +53,13 @@ public class Frame extends JFrame implements Runnable{
 					PayPanel.setTotal();
 				}
 				page.resetNextPage();
-				remove(page);
-				this.revalidate();
+//				remove(page);
+//				this.revalidate();
 				this.curPage = this.nextPage;
 				this.page = this.panels.get(this.curPage);
-				add(this.page);
+				//add(this.page); // = this.getContentPane().add(this.page); //= setContentPane(this.page) --> setter 을 활용해서 pane을 교체
+				this.setContentPane(this.page);
+				
 				this.nextPage = "";
 				this.repaint();
 			}

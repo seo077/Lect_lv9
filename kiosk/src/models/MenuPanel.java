@@ -21,11 +21,14 @@ public class MenuPanel extends MyUtill {
 	private String nextPage = "";
 	private Image back = new ImageIcon("mainImages/back.png").getImage().getScaledInstance(620, 800, Image.SCALE_SMOOTH);
 	
-	private Menu coffees[] = new Menu[16];
-	private Menu teas[] = new Menu[16];
+	private static int cSize = ManagerPanel.coffeeMenu.size();
+	private static int tSize = ManagerPanel.teaMenu.size();
 	
-	private JLabel coffee[] = new JLabel[16];
-	private JLabel tea[] = new JLabel[16];
+	private static  Menu coffees[];
+	private static Menu teas[];
+	
+	private JLabel coffee[];
+	private JLabel tea[];
 	
 	private JScrollPane scrollCoffee, scrollTea;
 	
@@ -43,7 +46,7 @@ public class MenuPanel extends MyUtill {
 	public static int sales;
 	
 	private JScrollPane scroll;
-	private JTable table;
+	private static JTable table;
 
 	public MenuPanel() {
 		setLayout(null);
@@ -56,20 +59,42 @@ public class MenuPanel extends MyUtill {
 		
 		addMouseListener(this);
 		
+		menuSetting();
 		setBtn();
-		setmenu();
 		setMenuPanel();
 		setScroll();
-		setMenuNamePrice();
 		setTable();
 	}
 
-	private void setTable() {
+	public static void menuSetting() {
+
+		
+		coffees = new Menu[cSize];
+		teas = new Menu[tSize];
+		
+		for(int i=0;i<cSize;i++) {
+			Menu temp = ManagerPanel.coffeeMenu.get(i);
+			coffees[i] = new Menu(temp.getIm(), temp.getSimple_im());
+			coffees[i].setNamePrice(temp.getName(), temp.getPrice());
+		}
+	
+		for(int i=0;i<tSize;i++) {
+			Menu temp = ManagerPanel.teaMenu.get(i);
+			teas[i] = new Menu(temp.getIm(), temp.getSimple_im());
+			teas[i].setNamePrice(temp.getName(), temp.getPrice());
+		}
+	}
+
+	private void setTable() { //내가 주문한 메뉴 테이블
+		col.add("제품명");
+		col.add("수량");
+		col.add("가격");
+		
 		this.table = new JTable(myMenu,col);
 		
 		this.scroll = new JScrollPane(this.table);
 		this.scroll.setBounds(10, 500, 582, 190);
-		this.add(this.scroll,0);
+		this.add(scroll,0);
 	}
 
 	private void setScroll() {
@@ -139,11 +164,12 @@ public class MenuPanel extends MyUtill {
 				this.cur = this.TEA;
 			}
 		}else if(e.getSource() == this.cancle) {
-			this.nextPage = "main";
 			myMenu = new Vector<>();
 			this.table.updateUI();
+			this.scroll.revalidate();
 			totalCnt = 0;
 			totalPrice =0;
+			this.nextPage = "main";
 		}else if(e.getSource() == this.pay) {
 			this.nextPage = "pay";
 		}
@@ -153,7 +179,8 @@ public class MenuPanel extends MyUtill {
 		this.coffeeMenu = new JPanel();
 		this.coffeeMenu.setLayout(null);
 		
-		for(int i=0;i<16;i++) {
+		coffee = new JLabel[cSize];
+		for(int i=0;i<cSize;i++) {
 			this.coffee[i] = new JLabel(new ImageIcon(this.coffees[i].getIm().getIm()));
 			this.coffee[i].setVisible(true);
 			this.coffee[i].setBounds(this.coffees[i].getIm().getX(), this.coffees[i].getIm().getY(),this.coffees[i].getIm().getW(), this.coffees[i].getIm().getH());
@@ -164,8 +191,8 @@ public class MenuPanel extends MyUtill {
 		
 		this.teaMenu = new JPanel();
 		this.teaMenu.setLayout(null);
-		
-		for(int i=0;i<16;i++) {
+		tea = new JLabel[tSize];
+		for(int i=0;i<tSize;i++) {
 			this.tea[i] = new JLabel(new ImageIcon(this.teas[i].getIm().getIm()));
 			this.tea[i].setVisible(true);
 			this.tea[i].setBounds(this.teas[i].getIm().getX(), this.teas[i].getIm().getY(),this.teas[i].getIm().getW(), this.teas[i].getIm().getH());
@@ -176,63 +203,12 @@ public class MenuPanel extends MyUtill {
 
 	}
 
-	private void setmenu() {
-		int x = 20;
-		int y = 10;
-		for (int i = 0; i < 16; i++) {
-			String fileName1 = "";
-			String fileName2 = "";
-			if (i < 9) {
-				fileName1 = String.format("menuImages/coffee_sub0%d.png", i + 1);
-				fileName2 = String.format("menuImages/coffee0%d.png", i + 1);
-			} else {
-				fileName1 = String.format("menuImages/coffee_sub%d.png", i + 1);
-				fileName2 = String.format("menuImages/coffee%d.png", i + 1);
-			}
-			Images im = new Images(x, y, 120, 160, fileName1);
-			Images simple_im = new Images(x, y, 120, 160, fileName2);
-			this.coffees[i] = new Menu(im, simple_im);
-
-			x += 130;
-			if (i != 0 && i % 4 == 3) {
-				y += 170;
-				x = 20;
-			}
-		
-			
-		}
-
-		x = 20;
-		y = 10;
-		for (int i = 0; i < 16; i++) {
-			String fileName1 = "";
-			String fileName2 = "";
-			if (i < 9) {
-				fileName1 = String.format("menuImages/tea_sub0%d.png", i + 1);
-				fileName2 = String.format("menuImages/tea0%d.png", i + 1);
-			} else {
-				fileName1 = String.format("menuImages/tea_sub%d.png", i + 1);
-				fileName2 = String.format("menuImages/tea%d.png", i + 1);
-			}
-			
-			Images im = new Images(x, y, 120, 160, fileName1);
-			Images simple_im = new Images(x, y, 120, 160, fileName2);
-			this.teas[i] = new Menu(im, simple_im);
-			
-			x += 130;
-			if (i != 0 && i % 4 == 3) {
-				y += 170;
-				x = 20;
-			}
-			
-		}
-
-	}
+	
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(this.cur == this.COFFEE) {
-			for(int i=0;i<16;i++) {
+			for(int i=0;i<cSize;i++) {
 				if(e.getSource() == this.coffee[i]) {
 					int check = -1;
 					for(int k=0;k<this.myMenu.size();k++) {
@@ -263,7 +239,7 @@ public class MenuPanel extends MyUtill {
 				}
 			}
 		}else {
-			for(int i=0;i<16;i++) {
+			for(int i=0;i<tSize;i++) {
 				if(e.getSource() == this.tea[i]) {
 					int check = -1;
 					for(int k=0;k<this.myMenu.size();k++) {
@@ -308,48 +284,16 @@ public class MenuPanel extends MyUtill {
 	@Override
 	public void resetNextPage() {
 		this.nextPage = "";
+		this.myMenu = new Vector<>();
+		this.table = new JTable(myMenu,col);
+		
+		this.scroll = new JScrollPane(this.table);
+		this.scroll.setBounds(10, 500, 582, 190);
+		this.add(this.scroll,0);
+		
+
+		this.revalidate();
+		this.repaint();
 	}
 	
-
-	private void setMenuNamePrice() {
-		
-		col.add("제품명");
-		col.add("수량");
-		col.add("가격");
-		
-		this.coffees[0].setNamePrice("아메리카노",1500);
-		this.coffees[1].setNamePrice("스페셜아메리카노",2500);
-		this.coffees[2].setNamePrice("헤이즐넛아메리카노",2000);
-		this.coffees[3].setNamePrice("유자아메리카노",2500);
-		this.coffees[4].setNamePrice("카푸치노",2500);
-		this.coffees[5].setNamePrice("카페라떼",2500);
-		this.coffees[6].setNamePrice("헤이즐넛라떼",3000);
-		this.coffees[7].setNamePrice("바닐라라떼",3000);
-		this.coffees[8].setNamePrice("크리미라떼",3000);
-		this.coffees[9].setNamePrice("헤이즐넛크리미라떼",3500);
-		this.coffees[10].setNamePrice("카페모카",3500);
-		this.coffees[11].setNamePrice("카라멜마끼아또",3500);
-		this.coffees[12].setNamePrice("에스프레소",1500);
-		this.coffees[13].setNamePrice("더치커피",2500);
-		this.coffees[14].setNamePrice("더치시나몬라떼",3000);
-		this.coffees[15].setNamePrice("더치코코넛라떼",3000);
-		
-		this.teas[0].setNamePrice("허니레몬티",3500);
-		this.teas[1].setNamePrice("허니유자티",3500);
-		this.teas[2].setNamePrice("허니자몽티",3500);
-		this.teas[3].setNamePrice("얼그레이",2500);
-		this.teas[4].setNamePrice("국화차",2500);
-		this.teas[5].setNamePrice("민트초코티",2500);
-		this.teas[6].setNamePrice("캐모마일",2500);
-		this.teas[7].setNamePrice("페퍼민트",2500);
-		this.teas[8].setNamePrice("청포도에이드",3500);
-		this.teas[9].setNamePrice("보이차",2500);
-		this.teas[10].setNamePrice("루이보스",2500);
-		this.teas[11].setNamePrice("로즈힙",2500);
-		this.teas[12].setNamePrice("히비스커스",2500);
-		this.teas[13].setNamePrice("복숭아아이스티",3000);
-		this.teas[14].setNamePrice("블루레몬에이드",3500);
-		this.teas[15].setNamePrice("자몽에이드",3500);
-	}
-
 }

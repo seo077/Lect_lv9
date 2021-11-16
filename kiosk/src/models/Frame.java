@@ -54,29 +54,16 @@ public class Frame extends JFrame implements Runnable{
 			if(this.nextPage != "" && this.curPage != this.nextPage) {
 				if(nextPage == "manager") {
 					ManagerPanel.setSales();
+				}else if(this.nextPage == "pay") {
+					PayPanel.setTotal();
+					PayPanel temp = (PayPanel)this.panels.get(this.nextPage);
+					temp.addTable();
 				}
 				page.resetNextPage();
 //				remove(page);
 //				this.revalidate();
 				this.curPage = this.nextPage;
 				this.page = this.panels.get(this.curPage);
-				if(this.curPage == "pay") {
-					PayPanel.setTotal();
-					PayPanel.table = new JTable(MenuPanel.myMenu, MenuPanel.col);
-
-					PayPanel.table.setBounds(10, 100, 582, 400);
-					PayPanel.table.getColumn("제품명").setWidth(200);
-					PayPanel.table.getColumn("수량").setWidth(182);
-					PayPanel.table.getColumn("가격").setWidth(200);
-					PayPanel.table.setCellEditor(null);
-					PayPanel.table.setGridColor(Color.red);
-					PayPanel.table.setVisible(true);
-					PayPanel.table.revalidate();
-					PayPanel.table.repaint();
-
-					PayPanel temp = (PayPanel)this.page;
-					temp.addTable(PayPanel.table);
-				}
 				//add(this.page); // = this.getContentPane().add(this.page); //= setContentPane(this.page) --> setter 을 활용해서 pane을 교체
 				this.setContentPane(this.page);
 				

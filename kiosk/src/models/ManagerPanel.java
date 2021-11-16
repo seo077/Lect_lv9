@@ -1,6 +1,7 @@
 package models;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -8,9 +9,33 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+
 
 class Add extends JFrame{
+	String str[] = {"name","price","imagefileName","simple_imagefileName"};
 	
+	JTextField fields[] = new JTextField[4];
+	JLabel labels[] = new JLabel[4];
+	public Add() {
+		setLayout(null);
+		setBounds(400, 200, 300, 300);
+		setVisible(true);
+		
+		for(int i=0;i<4;i++) {
+			this.labels[i] = new JLabel();
+			this.fields[i] = new JTextField();
+			
+			this.labels[i].setBounds(10, 10 + (50 * i), 100, 50);
+			this.labels[i].setText(str[i]);
+			this.labels[i].setVisible(true);
+			add(this.labels[i]);
+			
+			this.fields[i].setBounds(150, 10 + (50 * i), 100, 50);
+			this.fields[i].setVisible(true);
+			add(this.fields[i]);
+		}
+	}
 }
 
 class Del extends JFrame{
@@ -52,10 +77,40 @@ public class ManagerPanel extends MyUtill{
 	}
 
 	private void setBtn() {
-		// TODO Auto-generated method stub
+		this.back = new JButton();
+		this.delMenu = new JButton();
+		this.addMenu = new JButton();
 		
+		this.addMenu.setBounds(100, 150, 100, 100);
+		this.addMenu.setText("메뉴 추가");
+		this.addMenu.setVisible(true);
+		this.addMenu.addActionListener(this);
+		add(this.addMenu);
+		
+		this.delMenu.setBounds(250, 150, 100, 100);
+		this.delMenu.setText("메뉴 삭제");
+		this.delMenu.setVisible(true);
+		this.delMenu.addActionListener(this);
+		add(this.delMenu);
+		
+		this.back.setBounds(400, 600, 100, 50);
+		this.back.setText("뒤로가기");
+		this.back.setVisible(true);
+		this.back.addActionListener(this);
+		add(this.back);
 	}
 
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == this.back) {
+			
+		}else if(e.getSource() == this.addMenu) {
+			new Add();
+		}else if(e.getSource() == this.delMenu) {
+			
+		}
+	}
 	public void setmenu() {
 		int x = 20;
 		int y = 10;

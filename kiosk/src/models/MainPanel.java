@@ -29,8 +29,7 @@ class InDrinkAlert extends JFrame{
 
 
 public class MainPanel extends MyUtill{
-	private Images images[] = new Images[4];
-	private JLabel takeout, inDrink;
+	private JLabel takeout, inDrink, main;
 	private int idx = 0;
 	private String nextPage ="";
 	private JButton manager;
@@ -43,6 +42,16 @@ public class MainPanel extends MyUtill{
 		setMainImages();
 		setLabel();
 		setManager();
+	}
+
+	private void setMainImages() {
+		Image im = new ImageIcon("mainImages/main.gif").getImage().getScaledInstance(620, 600, Image.SCALE_SMOOTH);
+		//Image im = new ImageIcon("mainImages/main0.png").getImage().getScaledInstance(620, 600, Image.SCALE_SMOOTH);
+		this.main = new JLabel(new ImageIcon(im));
+		this.main.setBounds(0, 0, 620, 600);
+		this.main.setVisible(true);
+		
+		add(this.main,0);
 	}
 
 	private void setManager() {
@@ -89,30 +98,6 @@ public class MainPanel extends MyUtill{
 		}
 	}
 	
-	private void setMainImages() {
-		for(int i=0;i<4;i++) {
-			String fileName = String.format("mainImages/main%d.png", i);
-			this.images[i] = new Images(0, 0, 620, 600, fileName);
-		}
-	}
-	
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		g.drawImage(this.images[this.idx].getIm(),this.images[this.idx].getX(),this.images[this.idx].getY(),null);
-		
-		try {
-			//this.idx = this.idx == 3 ? 0 : this.idx++;
-			this.idx++;
-			if(this.idx == 4) {
-				this.idx = 0;
-			}
-			Thread.sleep(1500);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		repaint();
-	}
 
 	@Override
 	public String updateNextPage() {

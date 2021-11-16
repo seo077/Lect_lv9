@@ -95,6 +95,15 @@ public class MenuPanel extends MyUtill {
 		this.scroll = new JScrollPane(this.table);
 		this.scroll.setBounds(10, 500, 582, 190);
 		this.add(scroll,0);
+		
+		PayPanel.table = new JTable(MenuPanel.myMenu, MenuPanel.col);
+		PayPanel.table.getColumn("제품명").setWidth(200);
+		PayPanel.table.getColumn("수량").setWidth(182);
+		PayPanel.table.getColumn("가격").setWidth(200);
+		PayPanel.table.setCellEditor(null);
+		PayPanel.table.setGridColor(Color.red);
+		PayPanel.table.setVisible(true);
+
 	}
 
 	private void setScroll() {
@@ -167,11 +176,19 @@ public class MenuPanel extends MyUtill {
 			myMenu = new Vector<>();
 			this.table.updateUI();
 			this.scroll.revalidate();
+			
+			PayPanel.table.updateUI();
+			PayPanel.table.revalidate();
+			PayPanel.table.repaint();
 			totalCnt = 0;
 			totalPrice =0;
 			this.nextPage = "main";
 		}else if(e.getSource() == this.pay) {
 			this.nextPage = "pay";
+			PayPanel.table.updateUI();
+			PayPanel.table.revalidate();
+			PayPanel.table.repaint();
+			
 		}
 	}
 
@@ -224,7 +241,6 @@ public class MenuPanel extends MyUtill {
 						temp.add(this.coffees[i].getPrice()+"");
 						totalCnt++;
 						totalPrice+=this.coffees[i].getPrice();
-						sales+=this.coffees[i].getPrice();
 						this.myMenu.add(temp);
 					}else {
 						int temp = Integer.parseInt(this.myMenu.get(check).get(1));
@@ -232,10 +248,9 @@ public class MenuPanel extends MyUtill {
 						this.myMenu.get(check).set(1, cnt+"");
 						totalCnt++;
 						totalPrice+=this.coffees[i].getPrice();
-						sales+=this.coffees[i].getPrice();
 					}
 					this.table.updateUI();
-					
+					PayPanel.table.updateUI();
 				}
 			}
 		}else {
@@ -266,6 +281,7 @@ public class MenuPanel extends MyUtill {
 						sales+=this.coffees[i].getPrice();
 					}
 					this.table.updateUI();
+					PayPanel.table.updateUI();
 				}
 			}
 		}
@@ -291,7 +307,6 @@ public class MenuPanel extends MyUtill {
 		this.scroll.setBounds(10, 500, 582, 190);
 		this.add(this.scroll,0);
 		
-
 		this.revalidate();
 		this.repaint();
 	}

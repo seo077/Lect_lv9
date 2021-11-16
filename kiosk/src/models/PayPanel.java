@@ -7,12 +7,15 @@ import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 public class PayPanel extends MyUtill {
 	private String nextPage = "";
 
 	public static JTable table;
+	public static JScrollPane scroll;
+	
 	private Images order[] = new Images[6];
 	private static JLabel price;
 
@@ -28,15 +31,7 @@ public class PayPanel extends MyUtill {
 		setLabel();
 		setBtn();
 
-		table = new JTable(MenuPanel.myMenu, MenuPanel.col);
-
-		table.setBounds(10, 100, 582, 400);
-		table.getColumn("제품명").setWidth(200);
-		table.getColumn("수량").setWidth(182);
-		table.getColumn("가격").setWidth(200);
-		table.setCellEditor(null);
-		table.setGridColor(Color.red);
-		table.setVisible(true);
+		
 		add(table);
 		}
 
@@ -103,8 +98,9 @@ public class PayPanel extends MyUtill {
 		this.nextPage = "";
 	}
 
-	public void addTable(JTable table2) {
-		add(table2);
+	public void addTable() {
+		
+		this.setComponentZOrder(table, 0);
 		this.revalidate();
 		this.repaint();
 	}

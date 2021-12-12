@@ -2,6 +2,7 @@ package models;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -14,7 +15,9 @@ public class PayPanel extends MyUtill {
 	private String nextPage = "";
 
 	public static JTable table;
-	public static JScrollPane scroll;
+	private static  Vector<Vector <String>> myMenu ;
+	private static  Vector<String> col; //제품명, 수량, 가격
+	public static int sales;
 	
 	private Images order[] = new Images[6];
 	private static JLabel price;
@@ -31,8 +34,19 @@ public class PayPanel extends MyUtill {
 		setLabel();
 		setBtn();
 
+		this.myMenu = MenuPanel.myMenu;
+		this.col = MenuPanel.col;
+	
+		table = new JTable(myMenu,col); 
+		table.setBounds(8, 100, 582, 300);
+		table.getColumn("제품명").setWidth(200);
+		table.getColumn("수량").setWidth(182);
+		table.getColumn("가격").setWidth(200);
+		table.setCellEditor(null);
+		table.setGridColor(Color.red);
+		table.setVisible(true);
+		add(table,0);
 		
-		add(table);
 		}
 
 	private void setLabel() {
@@ -56,7 +70,9 @@ public class PayPanel extends MyUtill {
 	public static void setTotal() {
 		price.setText(MenuPanel.totalPrice + "");
 		cnt.setText(MenuPanel.totalCnt + "");
+	
 	}
+
 
 	private void setBtn() {
 		this.card = new JButton("카드 계산");
@@ -70,6 +86,30 @@ public class PayPanel extends MyUtill {
 		this.cash.addActionListener(this);
 		this.cash.setVisible(true);
 		add(this.cash);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == this.card) {
+			
+			upSales();
+			reset();
+			this.nextPage = "main";
+		}else {
+			
+			upSales();
+			reset();
+			this.nextPage = "main";
+		}
+	}
+	private void reset() {
+		MenuPanel temp = new MenuPanel();
+		temp.reset();
+		Frame.resetPanel();
+	}
+
+	private void upSales() {
+		sales+=MenuPanel.totalPrice;
 	}
 
 	private void setOrder() {
@@ -98,12 +138,7 @@ public class PayPanel extends MyUtill {
 		this.nextPage = "";
 	}
 
-	public void addTable() {
-		
-		this.setComponentZOrder(table, 0);
-		this.revalidate();
-		this.repaint();
-	}
+	
 
 
 }

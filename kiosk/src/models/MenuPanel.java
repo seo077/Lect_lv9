@@ -31,22 +31,20 @@ public class MenuPanel extends MyUtill {
 	private JLabel tea[];
 	
 	private JScrollPane scrollCoffee, scrollTea;
-	
-	private final int COFFEE = 1;
-	private final int TEA = 2;
+
 	
 	private JPanel coffeeMenu, teaMenu;
 	private JButton bt_coffe,bt_tea,cancle, pay;
-	private int cur = this.COFFEE;
+	private int cur = ManagerPanel.COFFEE;
 	
 	public static Vector<Vector <String>> myMenu = new Vector<>();
 	public static Vector<String> col = new Vector<>(); //제품명, 수량, 가격
+
 	public static int totalPrice;
 	public static int totalCnt;
-	public static int sales;
 	
-	private JScrollPane scroll;
-	private static JTable table;
+	public static JScrollPane scroll;
+	public static JTable table;
 
 	public MenuPanel() {
 		setLayout(null);
@@ -96,13 +94,6 @@ public class MenuPanel extends MyUtill {
 		this.scroll.setBounds(10, 500, 582, 190);
 		this.add(scroll,0);
 		
-		PayPanel.table = new JTable(MenuPanel.myMenu, MenuPanel.col);
-		PayPanel.table.getColumn("제품명").setWidth(200);
-		PayPanel.table.getColumn("수량").setWidth(182);
-		PayPanel.table.getColumn("가격").setWidth(200);
-		PayPanel.table.setCellEditor(null);
-		PayPanel.table.setGridColor(Color.red);
-		PayPanel.table.setVisible(true);
 
 	}
 
@@ -153,45 +144,67 @@ public class MenuPanel extends MyUtill {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == this.bt_coffe) {
-			if(this.cur != this.COFFEE) {
+			if(this.cur != ManagerPanel.COFFEE) {
 				remove(this.scrollTea);
 				this.revalidate();
 				this.repaint();
 				add(this.scrollCoffee,0);
 				this.bt_coffe.setBounds(10,10,90,60);
 				this.bt_tea.setBounds(100,30,90,40);
-				this.cur = this.COFFEE;
+				this.cur = ManagerPanel.COFFEE;
 			}
 		}else if(e.getSource() == this.bt_tea) {
-			if(this.cur != this.TEA) {
+			if(this.cur != ManagerPanel.TEA) {
 				remove(this.scrollCoffee);
 				this.revalidate();
 				this.repaint();
 				add(this.scrollTea,0);
 				this.bt_coffe.setBounds(10,30,90,40);
 				this.bt_tea.setBounds(100,10,90,60);
-				this.cur = this.TEA;
+				this.cur = ManagerPanel.TEA;
 			}
 		}else if(e.getSource() == this.cancle) {
 			myMenu = new Vector<>();
+			this.remove(this.scroll);
+			
+			this.table = new JTable(myMenu,col);
+			
+			this.scroll = new JScrollPane(this.table);
+			this.scroll.setBounds(10, 500, 582, 190);
+			this.add(this.scroll,0);
+			
 			this.table.updateUI();
 			this.scroll.revalidate();
-			
-			PayPanel.table.updateUI();
-			PayPanel.table.revalidate();
-			PayPanel.table.repaint();
+			this.revalidate();
+			this.repaint();
 			totalCnt = 0;
 			totalPrice =0;
 			this.nextPage = "main";
 		}else if(e.getSource() == this.pay) {
 			this.nextPage = "pay";
-			PayPanel.table.updateUI();
-			PayPanel.table.revalidate();
-			PayPanel.table.repaint();
+
 			
 		}
 	}
 
+	public void reset() {
+		myMenu = new Vector<>();
+		col = new Vector<>();
+		this.remove(this.scroll);
+		
+		this.table = new JTable(myMenu,col);
+		
+		this.scroll = new JScrollPane(this.table);
+		this.scroll.setBounds(10, 500, 582, 190);
+		this.add(this.scroll,0);
+		
+		this.table.updateUI();
+		this.scroll.revalidate();
+		this.revalidate();
+		this.repaint();
+		totalCnt = 0;
+		totalPrice =0;
+	}
 	private void setMenuPanel() {
 		this.coffeeMenu = new JPanel();
 		this.coffeeMenu.setLayout(null);
@@ -224,7 +237,7 @@ public class MenuPanel extends MyUtill {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(this.cur == this.COFFEE) {
+		if(this.cur == ManagerPanel.COFFEE) {
 			for(int i=0;i<cSize;i++) {
 				if(e.getSource() == this.coffee[i]) {
 					int check = -1;
@@ -250,7 +263,7 @@ public class MenuPanel extends MyUtill {
 						totalPrice+=this.coffees[i].getPrice();
 					}
 					this.table.updateUI();
-					PayPanel.table.updateUI();
+			
 				}
 			}
 		}else {
@@ -270,7 +283,7 @@ public class MenuPanel extends MyUtill {
 						temp.add(this.teas[i].getPrice()+"");
 						totalCnt++;
 						totalPrice+=this.teas[i].getPrice();
-						sales+=this.coffees[i].getPrice();
+					
 						this.myMenu.add(temp);
 					}else {
 						int temp = Integer.parseInt(this.myMenu.get(check).get(1));
@@ -278,10 +291,10 @@ public class MenuPanel extends MyUtill {
 						this.myMenu.get(check).set(1, cnt+"");
 						totalCnt++;
 						totalPrice+=this.coffees[i].getPrice();
-						sales+=this.coffees[i].getPrice();
+						
 					}
 					this.table.updateUI();
-					PayPanel.table.updateUI();
+					
 				}
 			}
 		}
@@ -300,12 +313,6 @@ public class MenuPanel extends MyUtill {
 	@Override
 	public void resetNextPage() {
 		this.nextPage = "";
-		this.myMenu = new Vector<>();
-		this.table = new JTable(myMenu,col);
-		
-		this.scroll = new JScrollPane(this.table);
-		this.scroll.setBounds(10, 500, 582, 190);
-		this.add(this.scroll,0);
 		
 		this.revalidate();
 		this.repaint();

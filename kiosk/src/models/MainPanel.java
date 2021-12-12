@@ -45,13 +45,15 @@ public class MainPanel extends MyUtill{
 	}
 
 	private void setMainImages() {
-		Image im = new ImageIcon("mainImages/main.gif").getImage().getScaledInstance(620, 600, Image.SCALE_SMOOTH);
-		//Image im = new ImageIcon("mainImages/main0.png").getImage().getScaledInstance(620, 600, Image.SCALE_SMOOTH);
+//		Image im = new ImageIcon("mainImages/main.gif").getImage();
+//		im.getScaledInstance(620, 600, Image.SCALE_SMOOTH);
+		Image im = new ImageIcon("mainImages/main.gif").getImage().getScaledInstance(620, 600, Image.SCALE_FAST);
+//		this.main = new JLabel(new ImageIcon("mainImages/main.gif"));
 		this.main = new JLabel(new ImageIcon(im));
 		this.main.setBounds(0, 0, 620, 600);
 		this.main.setVisible(true);
 		
-		add(this.main,0);
+		add(this.main);
 	}
 
 	private void setManager() {
@@ -61,7 +63,7 @@ public class MainPanel extends MyUtill{
 		this.manager.setVisible(true);
 		this.manager.addActionListener(this);
 		
-		add(this.manager);
+		add(this.manager,0);
 	}
 
 	@Override
